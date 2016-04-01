@@ -1,0 +1,1 @@
+angular.module('advAnalytics',['appRoutes','loginCtrl','homeCtrl','eventCtrl','profileCtrl']);

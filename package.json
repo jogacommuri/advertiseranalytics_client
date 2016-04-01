@@ -1,0 +1,28 @@
+{
+  "name": "restapi",
+  "version": "1.0.0",
+  "description": "restful Api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jogacommuri/restful_login_api.git"
+  },
+  "author": "joga",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jogacommuri/restful_login_api/issues"
+  },
+  "homepage": "https://github.com/jogacommuri/restful_login_api#readme",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.14.2",
+    "express": "^4.13.4",
+    "jsonwebtoken": "^5.5.4",
+    "mongoose": "^4.4.2",
+    "morgan": "^1.6.1",
+    "socket.io": "^1.4.5"
+  }
+}

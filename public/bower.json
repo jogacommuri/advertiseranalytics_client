@@ -1,0 +1,30 @@
+{
+  "name": "public",
+  "authors": [
+    "joga commuri <jogacommuri@yahoo.com>"
+  ],
+  "description": "restlogin api",
+  "main": "app.js",
+  "moduleType": [
+    "amd",
+    "es6",
+    "globals",
+    "node",
+    "yui"
+  ],
+  "license": "MIT",
+  "homepage": "index.html",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.0",
+    "angular-route": "^1.5.0",
+    "jquery": "^2.2.2"
+  }
+}
