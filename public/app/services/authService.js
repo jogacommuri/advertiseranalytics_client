@@ -57,4 +57,19 @@ angular.module('authService',[])
 			}
 		}
 		return authTokenFactory;
-	});
+	})
+    .factory('AuthInterceptor', function($q, $location, AuthToken){
+
+		var interceptorFactory = {};
+
+		interceptorFactory.request = function(config){
+
+			var token = AuthToken.getToken();
+
+			if(token){
+				config.headers['x-access-token'] = token;
+			}
+			return config;
+		};
+		return interceptorFactory;
+});

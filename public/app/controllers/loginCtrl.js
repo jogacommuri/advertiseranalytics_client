@@ -1,28 +1,36 @@
 angular.module('loginCtrl',['userService'])
-    .controller('loginCtrl',function($location){
+    .controller('loginCtrl',function($location,$http){
     var login =  this;
     
     login.title = "login";
      login.signinUser=function(signinData){
          console.log(login.signinData);
-         $location.path('/home');
-     }
+         
+         $http.post('http://advanalytics.herokuapp.com/users/login')
+            .success(function(data){
+             console.log("login post success");
+             console.log("token: "+data);
+            })
+            .error(function(data) {
+				console.log('Error: ' + data);
+			});
+//         $location.path('/home');
+     };
      
     var vm =  this;
     vm.title ="signup";
     vm.signupUser = function(userData){
         console.log("signup");
         console.log(vm.userData);
-        $location.path('/home');
-    /*User.create(vm.userData)
-        .then(function(response){
-            vm.userData = {};
-
-            vm.message = response.data.message;
-
-            $window.localStorage.setItem('token',response.data.token);
-            $location.path('/home');
-        });*/	
-    }
+       $http.post('http://advanalytics.herokuapp.com/users/signup')
+            .success(function(data){
+             console.log("signup post success");
+             
+            })
+            .error(function(data) {
+				console.log('Error: ' + data);
+			});
+        // $location.path('/home');	
+    };
     
 });
