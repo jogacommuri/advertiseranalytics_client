@@ -11,9 +11,19 @@ angular.module('appRoutes', ['ngRoute'])
                 controller: 'loginCtrl',
 				controllerAs: 'login'
 			})
+            .when('/signup',{
+				templateUrl:'app/views/pages/signup.html',
+                controller: 'loginCtrl',
+				controllerAs: 'signup'
+			})
 			.when('/events',{
 				templateUrl:'app/views/pages/events.html',
                 controller: 'eventCtrl',
+				controllerAs: 'event'
+			})
+            .when('/eventDashboard',{
+				templateUrl:'app/views/pages/eventdashboard.html',
+            controller: 'eventCtrl',
 				controllerAs: 'event'
 			})
             .when('/profile',{

@@ -185,7 +185,7 @@ a, button {
 	width: 70%;
 }
 .login-top a {
-	font-size: 48px;
+	font-size: 35px;
 	color: #FFF;
 	text-decoration: none;
 }
@@ -213,10 +213,10 @@ a, button {
 	border: 0;
 	box-shadow: none;
 	border-radius: 0;
-	color: #FFF;
-	font-size: 26px;
-	line-height: 36px;
-	height: auto;
+	/*color: #FFF;*/
+	font-size: 20px;
+	
+	/*height: auto;*/
 	border-bottom: 2px solid #A6A0AD;
 }
 .login-form .form-group > a {
@@ -707,4 +707,45 @@ float:left;
 }
 .margin{
 	margin-left: 30px;
+}
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-menu {
+    background-color: #404040;;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
 }

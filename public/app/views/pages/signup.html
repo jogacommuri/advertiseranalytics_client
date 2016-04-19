@@ -1,0 +1,34 @@
+<style>
+    body{
+        margin-top: 0px;
+    }
+</style>
+<section class="body-bg">
+    <div class="container-fluid " ng-controller="loginCtrl as user" >
+        <div class="login-cont">
+          <div class="login-top"> <a href="#">
+            <img src="images/groundhog-fiv.png">AdvertiserAnalytics</a>
+          </div>
+          <div class="login-form login-form-02"> 
+            <!-- form start -->
+            <form ng-submit="user.signupUser()">
+              <div class="form-group">
+                <input type="text" class="form-control text-center" placeholder="Enter your First Name" ng-model="user.userData.firstname">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control text-center" placeholder="Enter your Last Name" ng-model="user.userData.lastname">
+              </div>
+              <div class="form-group">
+                <input type="email" class="form-control text-center" placeholder="Enter your Email address" ng-model="user.userData.email">
+              </div>
+              <div class="form-group">
+                <input type="password" class="form-control text-center" placeholder="Enter your password" ng-model="user.userData.password"/>
+              </div>
+              <button class="btn bg-btn-green log-in-btn" type="submit" >Sign Up</button>
+            </form>
+            <!-- form end --> 
+          </div>
+        </div>
+    <!-- login-cont End -->
+    </div>    
+</section>

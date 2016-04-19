@@ -6,24 +6,26 @@
 <section  class="body-bg">
     <div class="container-fluid " ng-controller="loginCtrl as login" >
     
-    <div class="login-cont">
-      <div class="login-top"> <a href="#">AdvertiserAnalytics</a>
-        <br/> <br/>
-        <!--<img src="images/logo-icon.png" alt="swiss-monkey-logo"/> </div>-->
-      <div class="login-form login-form-02"> 
-        <!-- form start -->
-        <form>
-          <div class="form-group">
-            <input type="email" class="form-control text-center" id="exampleInputEmail1" placeholder="Enter your employee ID">
+        <div class="login-cont">
+          <div class="login-top"> <a href="#">
+            <img src="images/groundhog-fiv.png">AdvertiserAnalytics</a>
           </div>
-          <div class="form-group">
-            <input type="password" class="form-control text-center" id="exampleInputPassword1" placeholder="Enter your password"/>
-            <a href="#">Forgot Password</a> </div>
-          <a href="/home"><button class="btn bg-btn-green log-in-btn" type="submit" >LOG IN</button></a>
-        </form>
-        <!-- form end --> 
-      </div>
-    </div>
+          <div class="login-form login-form-02"> 
+            <!-- form start -->
+            <form ng-submit="login.signinUser()">
+              <div class="form-group">
+                <input type="email" class="form-control text-center" id="exampleInputEmail1" placeholder="Enter your Email address" ng-model="login.signinData.email">
+              </div>
+              <div class="form-group">
+                <input type="password" class="form-control text-center" id="exampleInputPassword1" placeholder="Enter your password" ng-model="login.signinData.password"/>
+                <a href="#">Forgot Password</a>or
+                <a href="/signup">Signup</a> 
+              </div>
+              <button class="btn bg-btn-green log-in-btn" type="submit" >LOG IN</button>
+            </form>
+            <!-- form end --> 
+          </div>
+        </div>
     <!-- login-cont End -->
 </div>
 </section>

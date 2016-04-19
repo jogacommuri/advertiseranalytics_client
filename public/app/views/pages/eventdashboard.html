@@ -1,0 +1,22 @@
+<style>
+        #container {
+          height: 500px;
+          min-width: 400px;
+          max-width: 800px;
+          margin: 0 auto;
+        }
+
+        .loading {
+          margin-top: 10em;
+          text-align: center;
+          color: gray;
+        }
+    </style>
+<div class="container-fluid" ng-controller="eventCtrl as event">
+    <div id="container">
+        <div class="loading">
+            <i class="icon-spinner icon-spin icon-large"></i>
+            Loading data from Google Spreadsheets...
+        </div>
+    </div>
+</div>
