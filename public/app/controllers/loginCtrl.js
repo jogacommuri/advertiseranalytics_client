@@ -1,15 +1,20 @@
 angular.module('loginCtrl',['userService'])
-    .controller('loginCtrl',function($location,$http){
-    var login =  this;
+    .controller('loginCtrl',function($location,$http,$window){
+    var vm =  this;
     
-    login.title = "login";
-     login.signinUser=function(signinData){
-         console.log(login.signinData);
+    vm.title = "login";
+    vm.signinData = {};
+    
+     vm.signinUser=function(signinData){
+         console.log(vm.signinData);
          
-         $http.post('http://advanalytics.herokuapp.com/users/login')
+         $http.post('http://advanalytics.herokuapp.com/users/login',vm.signinData)
             .success(function(data){
              console.log("login post success");
-             console.log("token: "+data);
+             console.log(data);
+             alert(data.msg);
+              $window.localStorage.setItem('accessToken', data.accessToken);
+             $location.path('/home');
             })
             .error(function(data) {
 				console.log('Error: ' + data);
@@ -22,10 +27,12 @@ angular.module('loginCtrl',['userService'])
     vm.signupUser = function(userData){
         console.log("signup");
         console.log(vm.userData);
-       $http.post('http://advanalytics.herokuapp.com/users/signup')
+       $http.post('http://advanalytics.herokuapp.com/users/signup',vm.userData)
             .success(function(data){
              console.log("signup post success");
-             
+             console.log(data);
+           alert(data.msg);
+            $location.path('/');
             })
             .error(function(data) {
 				console.log('Error: ' + data);

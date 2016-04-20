@@ -8,7 +8,7 @@
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
           <a class="navbar-brand" href="index.html">Advertiser Analytics</a> </div>
         <!-- Top Menu Items -->
-        <div class="top-title">Welcome <strong>Paul</strong>, You have 3 notifications</div>
+        <div class="top-title">Welcome <strong>{{profile.profileData.fname}}</strong>, You have 3 notifications</div>
         <ul class="nav navbar-right top-nav">
           <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="images/ger-icon.png" alt="user"/></a>
             <ul class="dropdown-menu">
@@ -57,28 +57,62 @@
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="login-form login-form-02">
                 <form ng-submit="profile.updateProfile()">
-                  <div class="form-group">
+                  <div class="form-group col-md-6 text-center" align="center">
+                      
                     <input type="text" class="form-control text-center" placeholder="Enter your First Name" 
-                           ng-model="profile.profileData.firstname">
+                           value="profile.profileData.fname" ng-model="profile.profileData.fname">
                   </div>
-                  <div class="form-group">
+                  <div class="form-group col-md-6">
                     <input type="text" class="form-control text-center" placeholder="Enter your Last Name" 
-                           ng-model="profile.profileData.lastname">
+                           value="profile.profileData.lname" ng-model="profile.profileData.lname">
                   </div>
-                  <div class="form-group">
+                  <div class="form-group col-md-8" align="center">
                     <input type="email" class="form-control text-center" placeholder="Enter your Email address" 
-                           ng-model="profile.profileData.email">
+                           ng-model="profile.profileData.email" readonly>
                   </div>
-                  <div class="form-group">
-                    <input type="password" class="form-control text-center" placeholder="Enter your password" 
-                           ng-model="profile.profileData.password"/>
+                    <div class="form-group col-md-7">
+                    <input type="password" class="form-control col-md-2 text-center" placeholder="Change Your Password" 
+                           ng-model="profile.profileData.password">
+                    </div>
+                  <div class="form-group col-md-6">
+                    <input type="text" class="form-control col-md-2 text-center" placeholder="Age" 
+                           ng-model="profile.profileData.age">
+                    </div>
+                  <div class="form-group col-md-6">
+                    <input type="text" class="form-control col-md-3 text-center" placeholder="Gender" 
+                           ng-model="profile.profileData.gender">
+                 </div>
+                  <div class="form-group col-md-4">
+                    <input type="text" class="form-control col-md-2 text-center" placeholder="State" 
+                           ng-model="profile.profileData.state"/>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <input type="text" class="form-control col-md-2 text-center" placeholder="Ciy" 
+                           ng-model="profile.profileData.city"/>
+                    </div>
+                    <div class="form-group col-md-4">
+                    <input type="text" class="form-control col-md-3 text-center" placeholder="Country" 
+                           ng-model="profile.profileData.country"/>
                   </div>
-                    <label for="category"> Category: </label>
-                  <select class="form-control" ng-model="profile.profileData.category" ng-options="category.name for category in category">
-                            </select>
-                    <label for="Interests"> Interests: </label>
+                    <!--<label for="Interests"> Interests: </label>
                   <select class="form-control" ng-model="profile.profileData.interest" ng-options="interests.name for interests in interests">
-                            </select>
+                            </select>-->
+                    <div class="form-group col-md-10 " >
+                        <div class="col-md-4" ng-repeat="interest in interests">
+                            
+                            <label style="font-size:14px;" for="{{interest.category_name}}">
+                                <input id="{{interest.category_name}}" type="checkbox" value="{{interest.category_name}}" ng-checked="selection.indexOf(interest.category_name) > -1" ng-click="toggleSelection(interest.category_name)" /> {{interest.category_name}}
+                            </label>
+                                
+                        </div>
+                    </div>
+                    <br/><br/>
+                    <!--<div class="form-group">
+                        <span style="color:black;">Selected Items:<span>
+                        <div class="col-md-3" ng-repeat="name in selection" class="form-control">
+                        {{name}}
+                        </div>
+                    </div>-->
                   <button class="btn bg-btn-green log-in-btn" type="submit" >Update Profile</button>
                 </form>
                 <!-- form end -->

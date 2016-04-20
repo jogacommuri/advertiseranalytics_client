@@ -4,10 +4,10 @@ angular.module('authService',[])
 
 		var authFactory = {};
 
-		authFactory.login = function(email,password){
+		/*authFactory.login = function(username,password){
 
 			 return $http.post('/api/login',{
-			 	email: email,
+			 	username: username,
 			 	password: password
 			 })
 			 .success(function(data){
@@ -27,11 +27,23 @@ angular.module('authService',[])
 			} else {	
 				return false;
 			}
-		}
+		}*/
 
-		authFactory.getUser = function(){
-			if(AuthToken.getToken()){
+		authFactory.getUser = function(token){
+            if(AuthToken.getToken()){
 				return $http.get('/api/me');
+			}else{
+				return $q.reject({message:"User has not token"});
+			}
+			if(AuthToken.getToken()){
+                console.log(token);
+				$http.post("http://advanalytics.herokuapp.com/users/getUser",token)
+                    .success(function(data){
+                                console.log(data);
+                             })
+            .error(function(data) {
+				console.log('Error: ' + data);
+			});
 			}else{
 				return $q.reject({message:"User has not token"});
 			}
@@ -39,8 +51,7 @@ angular.module('authService',[])
 
 		return authFactory;
 	})
-
-	.factory('AuthToken',function($window){
+    .factory('AuthToken',function($window){
 
 		var authTokenFactory = {};
 
@@ -58,18 +69,5 @@ angular.module('authService',[])
 		}
 		return authTokenFactory;
 	})
-    .factory('AuthInterceptor', function($q, $location, AuthToken){
 
-		var interceptorFactory = {};
-
-		interceptorFactory.request = function(config){
-
-			var token = AuthToken.getToken();
-
-			if(token){
-				config.headers['x-access-token'] = token;
-			}
-			return config;
-		};
-		return interceptorFactory;
-});
+	;

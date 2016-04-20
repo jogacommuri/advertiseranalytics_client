@@ -202,7 +202,7 @@ a, button {
 	margin-bottom: 60px;
 }
 .login-form {
-	width: 50%;
+	/*width: 50%;*/
 	margin: 0 auto;
 }
 .login-form .form-group {
