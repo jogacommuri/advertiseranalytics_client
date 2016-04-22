@@ -1,4 +1,4 @@
-@font-face {
+/*@font-face {
 	font-family: 'GothamRounded-Bold';
 	src: url('../fonts/GothamRounded-Bold_gdi.eot');
 	src: url('../fonts/GothamRounded-Bold_gdi.eot?#iefix') format('embedded-opentype'), url('../fonts/GothamRounded-Bold_gdi.woff') format('woff'), url('../fonts/GothamRounded-Bold_gdi.ttf') format('truetype'), url('../fonts/GothamRounded-Bold_gdi.svg#GothamRounded-Bold') format('svg');
@@ -24,7 +24,7 @@
 	font-style: normal;
 	font-stretch: normal;
  unicode-range: U+0020-2212;
-}
+}*/
 body {
 	font-family: 'GothamRounded-Book', sans-serif;
 	color: #404040;

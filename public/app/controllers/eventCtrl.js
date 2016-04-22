@@ -1,6 +1,9 @@
 angular.module('eventCtrl',[])
-    .controller('eventCtrl',function(){
+    .controller('eventCtrl',function($scope,$window){
     var event =  this;
+    $scope.userDetails = JSON.parse($window.localStorage.getItem('user'));
+    event.profileData = {};
+    event.profileData =  $scope.userDetails;
     
     event.title = "event";
     event.state = "us-ca";
