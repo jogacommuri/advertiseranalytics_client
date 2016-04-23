@@ -51,6 +51,23 @@
             <!-- /.navbar-collapse --> 
           </nav>
         <div id="page-wrapper" style="padding-right:0px;padding-left:0px;">
+
+          <div class="col-lg-8 col-sm-8 col-md-8 col-xs-12">
+          <div class="row">
+            <div class="search-query02">
+              <select class="form-control" ng-model="keyword" >
+                    <option ng-repeat="trending in trendings" value={{trending.category_name}}>{{trending.category_name}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+          <div class="row">
+            <button class="btn bg-btn-green" type="button" ng-click="search()">SEARCH</button>
+            <!--<button class="btn bg-btn-green" type="button" style="display: none;">SEARCH</button> -->  
+
+          </div>
+        </div>
             <ul class="nav nav-pills">
                 <li class="active"><a data-toggle="pill" href="#age">Age &amp; Gender</a></li>
                 <li><a data-toggle="pill" href="#crossdev">Cross Device</a></li>
@@ -61,15 +78,33 @@
             <div class="tab-content">
                 <div id="age" class="tab-pane fade in active">
                   <h3>Age &amp; Gender</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                  
+                  <div id="container_age">
+                        <div class="loading">
+                            <i class="icon-spinner icon-spin icon-large"></i>
+                            Loading data...
+                        </div>
+                 </div>
                 </div>
                 <div id="crossdev" class="tab-pane fade">
                   <h3>Cross Device</h3>
-                  <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                  
+                  <div id="container_cross">
+                        <div class="loading">
+                            <i class="icon-spinner icon-spin icon-large"></i>
+                            Loading data...
+                        </div>
+                 </div>
                 </div>
                 <div id="Location" class="tab-pane fade">
                   <h3>Location</h3>
-                  <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+                  
+                  <div id="container_location">
+                        <div class="loading">
+                            <i class="icon-spinner icon-spin icon-large"></i>
+                            Loading data...
+                        </div>
+                 </div>
                 </div>
           </div>
         </div>
