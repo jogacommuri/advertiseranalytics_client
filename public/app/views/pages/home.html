@@ -6,7 +6,7 @@
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-          <a class="navbar-brand" href="index.html">Advertiser Analytics</a> </div>
+          <a class="navbar-brand" href="/home">Advertiser Analytics</a> </div>
         <!-- Top Menu Items -->
         <div class="top-title">Welcome <strong>{{home.userDetails.fname}}</strong>, You have 3 notifications</div>
         <ul class="nav navbar-right top-nav">
@@ -29,7 +29,7 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul class="nav navbar-nav side-nav">
             <li class="admin-pic"> <img src="images/Oval 1.png" alt="ovel" />
-              <h4>Paul Langdon</h4>
+              <h4>{{home.userDetails.fname}}</h4>
               <p>Admin</p>
             </li>
               <li><a href="/home"><span class="sclicons" style="font-size:20px;color:whitesmoke"><i class="fa fa-home"></i></span> Home</a> </li>
