@@ -1,6 +1,6 @@
 
 angular.module('homeCtrl',['angularUtils.directives.dirPagination'])
-    .controller('homeCtrl',function($scope,$http,$window){
+    .controller('homeCtrl',function($scope,$http,$window,$location){
     var vm =  this;
     $scope.token= $window.localStorage.getItem('accessToken');
      
@@ -98,6 +98,12 @@ angular.module('homeCtrl',['angularUtils.directives.dirPagination'])
                     sweetAlert("Oops! some thing went wrong",error,"error");
                 });
 
+    }
+     
+    vm.logout=function(){
+        $window.localStorage.clear();
+        sweetAlert("Logout Successful");
+        $location.path('/');
     }
     
 });

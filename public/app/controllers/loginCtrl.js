@@ -15,7 +15,7 @@ angular.module('loginCtrl',['userService'])
             .success(function(data){
              console.log("login post success");
              console.log(data);
-             alert(data.msg);
+             sweetAlert("Login Successful");
               $window.localStorage.setItem('accessToken', data.accessToken);
              $location.path('/home');
             })
@@ -38,7 +38,7 @@ angular.module('loginCtrl',['userService'])
              $scope.submitted = false;
              $scope.has_error = false;
              $scope.submitting = false;
-             alert("Sucessfully register please login");
+             sweetAlert("Registration Successful");
              $location.path('/');
             })
             .error(function(data) {
