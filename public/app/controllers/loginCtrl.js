@@ -1,4 +1,4 @@
-angular.module('loginCtrl',['userService','jcs-autoValidate','angular-ladda'])
+angular.module('loginCtrl',['userService'])
     .controller('loginCtrl',function($location,$http,$window,$scope){
     var vm =  this;
     

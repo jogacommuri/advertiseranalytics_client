@@ -22,14 +22,25 @@ angular.module('eventDemoCtrl',[])
             $http.post('http://advanalytics.herokuapp.com/demographics_age', vm.postData)
             .success(function(data){
                 console.log("post sucess");
-                //console.log(data.male);
+                console.log(data.male);
+                
+                vm.maleData=[];
+                while (vm.maleData.length > 0) {
+                        vm.maleData.pop();
+                    }
+                vm.femaleData=[];
+                 while (vm.femaleData.length > 0) {
+                        vm.femaleData.pop();
+                    }
                 for(var key in data.male){
-                    vm.maleData.push(-data.male[key]);
+                    vm.maleData.push(-(data.male[key])) ;
+                    console.log(vm.maleData);
                 }
                
             
                 for(var key in data.female){
                     vm.femaleData.push(data.female[key]);
+                    console.log(vm.femaleData );
                 }
                 //console.log(vm.femaleData);
                  //event.data = data.results;

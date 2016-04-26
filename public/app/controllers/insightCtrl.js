@@ -24,6 +24,14 @@ angular.module('insightCtrl',[])
             .success(function(data){
                 console.log("post sucess");
                 //console.log(data.male);
+                vm.maleData=[];
+                while (vm.maleData.length > 0) {
+                        vm.maleData.pop();
+                    }
+                vm.femaleData=[];
+                 while (vm.femaleData.length > 0) {
+                        vm.femaleData.pop();
+                    }
                 for(var key in data.male){
                     vm.maleData.push(-data.male[key]);
                 }
