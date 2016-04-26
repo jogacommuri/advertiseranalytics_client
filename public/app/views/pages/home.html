@@ -83,6 +83,7 @@
                     <ul class="clearfix" >
                       <li ng-repeat="trending in trendings">
                           <a ng-click="home.search(trending.category_id)">
+
                               <img ng-src="images/home-thumb/{{trending.category_id}}.png" alt="" width="200" height="200">
                                 <span>{{trending.category_name}}</span>
                           </a>
@@ -100,6 +101,7 @@
                     <h4>Following</h4>
                     <ul class="clearfix" >
                       <li ng-repeat="interest in interests"><a  ng-click="home.search(interest.category_id)"><img ng-src="images/home-thumb/{{interest.category_id}}.png" alt="" width="200" height="200">
+
                       <span>{{interest.category_name}}</span></a>
                       <h6><button class="btn bg-btn-danger" ng-click="home.unfollow(interest.category_id)">Unfollow</button></h6>
                       </li>
