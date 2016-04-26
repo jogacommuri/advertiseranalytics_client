@@ -1,4 +1,5 @@
-<div class="container-fluid" ng-controller="eventDemoCtrl as event">
+
+<div class="container-fluid" ng-controller="eventDemoCtrl as event" >
     <div id="wrapper"> 
 
           <!-- Navigation -->
@@ -6,7 +7,7 @@
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-              <a class="navbar-brand" href="index.html">Advertiser Analytics</a> </div>
+              <a class="navbar-brand" href="/home">Advertiser Analytics</a> </div>
             <!-- Top Menu Items -->
             <div class="top-title">Welcome <strong>{{event.profileData.fname}}</strong>, You have 3 notifications</div>
             <ul class="nav navbar-right top-nav">
@@ -29,7 +30,7 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
               <ul class="nav navbar-nav side-nav">
                 <li class="admin-pic"> <img src="images/Oval 1.png" alt="ovel" />
-                  <h4>Paul Langdon</h4>
+                  <h4>{{event.profileData.fname}}</h4>
                   <p>Admin</p>
                 </li>
                   <li><a href="/home"><span class="sclicons" style="font-size:20px;color:whitesmoke"><i class="fa fa-home"></i></span> Home</a> </li>
@@ -44,32 +45,95 @@
                   </li> 
 
                      <!-- <a href="/events"><span class="sclicons" style="font-size:20px;color:whitesmoke"> <i class="fa fa-tachometer"></i></span> Events Dashboard</a> </li>-->
-                  <li> <a href="reports.html"><span class="sclicons" style="font-size:20px;color:whitesmoke"> <i class="fa fa-lightbulb-o"></i>  </span>Insights</a> </li>
+                  <li> <a href="/Insights"><span class="sclicons" style="font-size:20px;color:whitesmoke"> <i class="fa fa-lightbulb-o"></i>  </span>Insights</a> </li>
 
               </ul>
             </div>
             <!-- /.navbar-collapse --> 
           </nav>
-        <div id="page-wrapper" style="padding-right:0px;padding-left:0px;">
+        <div id="page-wrapper" style="padding-right:0px;padding-left:0px;" >
+
+          
+        <form ng-submit="event.getCategory()">
+          <div class="col-lg-8 col-sm-8 col-md-8 col-xs-12">
+              <div class="row">
+                <div class="search-query02">
+                        <select class="form-control" ng-model="event.eventName" value="event.eventName"
+                                ng-options="trending.category_name for trending in trendings">
+                            </select>
+                        <!--<select class="form-control" ng-model="event.eventName" >
+                            <option ng-repeat="trending in trendings" value={{trending.category_name}}>
+                                {{trending.category_name}}
+                            </option>
+                        </select>-->
+                </div>
+              </div>
+          </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <div class="row">
+             <button class="btn bg-btn-green" type="submit" >Get</button>
+            </div>
+        </div>
+        </form>
+                  
+               
+       <!-- <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+          <div class="row">
+           
+            <button class="btn bg-btn-green" type="button" style="display: none;">SEARCH</button>   
+
+          </div>
+        </div>-->
+            <br/><br/>
+           <div class="clear" style="height:10px;"></div>
             <ul class="nav nav-pills">
-                <li class="active"><a data-toggle="pill" href="#age">Age &amp; Gender</a></li>
-                <li><a data-toggle="pill" href="#crossdev">Cross Device</a></li>
-                <li><a data-toggle="pill" href="#Location">Location</a></li>
+                <li class="active"><a data-toggle="pill" data-target="#age">Age &amp; Gender</a></li>
+                <li><a data-toggle="pill" data-target="#crossdev">Cross Device</a></li>
+                <li><a data-toggle="pill" data-target="#Location">Location</a></li>
+                <li><a data-toggle="pill" data-target="#budget">Budget</a></li>
                 
             </ul>
             <br/><br/>
-            <div class="tab-content">
-                <div id="age" class="tab-pane fade in active">
+            <div class="tab-content container-fluid" style="width:100%">
+                <div id="age" class="tab-pane fade in active" >
                   <h3>Age &amp; Gender</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                  
+                  <div id="container_age">
+                        <div class="loading">
+                            <i class="icon-spinner icon-spin icon-large"></i>
+                            Loading data...
+                        </div>
+                 </div>
                 </div>
-                <div id="crossdev" class="tab-pane fade">
+                <div id="crossdev" class="tab-pane fade" >
                   <h3>Cross Device</h3>
-                  <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                  
+                  <div id="container_cross" >
+                        <div class="loading">
+                            <i class="icon-spinner icon-spin icon-large"></i>
+                            Loading data...
+                        </div>
+                 </div>
                 </div>
                 <div id="Location" class="tab-pane fade">
                   <h3>Location</h3>
-                  <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+                  
+                  <div id="container_location" >
+                        <div class="loading">
+                            <i class="icon-spinner icon-spin icon-large"></i>
+                            Loading data...
+                        </div>
+                 </div>
+                </div>
+                <div id="budget" class="tab-pane fade">
+                  <h3>Budget</h3>
+                  
+                  <div id="container_budget" >
+                        <div class="loading">
+                            <i class="icon-spinner icon-spin icon-large"></i>
+                            Loading data...
+                        </div>
+                 </div>
                 </div>
           </div>
         </div>

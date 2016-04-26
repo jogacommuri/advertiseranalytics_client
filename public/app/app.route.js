@@ -31,6 +31,11 @@ angular.module('appRoutes', ['ngRoute'])
             controller: 'eventDemoCtrl',
 				controllerAs: 'eventDemo'
             })
+            .when('/Insights',{
+				templateUrl:'app/views/pages/Insights.html',
+                controller: 'insightCtrl',
+				controllerAs: 'insight'
+			})
             .when('/profile',{
 				templateUrl:'app/views/pages/profile.html',
                 controller: 'profileCtrl',
