@@ -38,7 +38,6 @@
 
                         <a data-toggle="dropdown"><span class="sclicons" style="font-size:20px;color:whitesmoke"> <i class="fa fa-tachometer"></i></span> Events Dashboard</a>
                         <ul class="dropdown-menu">
-                           <li><a href="/events">Search Events</a></li>
                           <li><a href="/eventDashboard">Geographics</a></li>
                           <li><a href="/eventDemographics">Demographics</a></li>
                         </ul>
@@ -94,45 +93,36 @@
                 
             </ul>
             <br/><br/>
+            <div class="loading" ng-show="event.loading">
+                <i class="icon-spinner icon-spin icon-large"></i>
+                    Loading data...
+            </div>
             <div class="tab-content container-fluid" style="width:100%">
                 <div id="age" class="tab-pane fade in active" >
                   <h3>Age &amp; Gender</h3>
                   
-                  <div id="container_age">
-                        <div class="loading">
-                            <i class="icon-spinner icon-spin icon-large"></i>
-                            Loading data...
-                        </div>
+                  <div id="container_age" >
+                        
                  </div>
                 </div>
                 <div id="crossdev" class="tab-pane fade" >
                   <h3>Cross Device</h3>
                   
                   <div id="container_cross" >
-                        <div class="loading">
-                            <i class="icon-spinner icon-spin icon-large"></i>
-                            Loading data...
-                        </div>
                  </div>
                 </div>
                 <div id="Location" class="tab-pane fade">
                   <h3>Location</h3>
                   
                   <div id="container_location" >
-                        <div class="loading">
-                            <i class="icon-spinner icon-spin icon-large"></i>
-                            Loading data...
-                        </div>
+
                  </div>
                 </div>
                 <div id="budget" class="tab-pane fade">
                   <h3>Budget</h3>
                   
                   <div id="container_budget" >
-                        <div class="loading">
-                            <i class="icon-spinner icon-spin icon-large"></i>
-                            Loading data...
-                        </div>
+
                  </div>
                 </div>
           </div>
