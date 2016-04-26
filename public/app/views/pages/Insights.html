@@ -1,0 +1,148 @@
+<div class="container-fluid" ng-controller="insightCtrl as insight" >
+    <div id="wrapper"> 
+  
+      <!-- Navigation -->
+      <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation"> 
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+          <a class="navbar-brand" href="/home">Advertiser Analytics</a> </div>
+        <!-- Top Menu Items -->
+        <div class="top-title">Welcome <strong>{{insight.userDetails.fname}}</strong>, You have 3 notifications</div>
+        <ul class="nav navbar-right top-nav">
+          <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="images/ger-icon.png" alt="user"/></a>
+            <ul class="dropdown-menu">
+              <li class="icon-drop"></li>
+              <li> <a href="/profile"><i class="fa fa-fw fa-user"></i> Profile</a> </li>
+
+            </ul>
+          </li>
+          <li class="dropdown"> <a href="#" class="dropdown-toggle my-dropdown" data-toggle="dropdown"><img src="images/bell-icon.png" alt="bell"/></a>
+            <ul class="dropdown-menu alert-dropdown">
+              <li class="icon-drop"></li>
+              <li> <a href="#">Dr Alexander John, Dental Surgeon, has applied to your job posting.<span>2 hours ago</span></a> </li>
+              <li> <a href="#">Dr Alexander John, Dental Surgeon, has applied to your job posting.<span>2 hours ago</span></a> </li>
+            </ul>
+          </li>
+        </ul>
+        <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <ul class="nav navbar-nav side-nav">
+            <li class="admin-pic"> <img src="images/Oval 1.png" alt="ovel" />
+              <h4>{{insight.userDetails.fname}}</h4>
+              <p>Admin</p>
+            </li>
+              <li><a href="/home"><span class="sclicons" style="font-size:20px;color:whitesmoke"><i class="fa fa-home"></i></span> Home</a> </li>
+              <li>
+               
+                    <a data-toggle="dropdown"><span class="sclicons" style="font-size:20px;color:whitesmoke"> <i class="fa fa-tachometer"></i></span> Events Dashboard</a>
+                    <ul class="dropdown-menu">
+                      <li><a href="/events">Search Events</a></li>
+                      <li><a href="/eventDashboard">Geographics</a></li>
+                      <li><a href="/eventDemographics">Demographics</a></li>
+                    </ul>
+              </li> 
+                  
+                 <!-- <a href="/events"><span class="sclicons" style="font-size:20px;color:whitesmoke"> <i class="fa fa-tachometer"></i></span> Events Dashboard</a> </li>-->
+              <li> <a href="/Insights"><span class="sclicons" style="font-size:20px;color:whitesmoke"> <i class="fa fa-lightbulb-o"></i>  </span>Insights</a> </li>
+
+          </ul>
+        </div>
+        <!-- /.navbar-collapse --> 
+      </nav>
+      <div id="page-wrapper" style="padding-right:0px;padding-left:0px;" >
+        <form ng-submit="insight.getCategory()">
+          <div class="col-lg-8 col-sm-8 col-md-8 col-xs-12">
+              <div class="row">
+                <div class="search-query02">
+                        <select class="form-control" ng-model="insight.eventName" value="insight.eventName"
+                                ng-options="trending.category_name for trending in trendings">
+                            </select>
+                        <!--<select class="form-control" ng-model="event.eventName" >
+                            <option ng-repeat="trending in trendings" value={{trending.category_name}}>
+                                {{trending.category_name}}
+                            </option>
+                        </select>-->
+                </div>
+              </div>
+          </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <div class="row">
+             <button class="btn bg-btn-green" type="submit" >Get</button>
+            </div>
+        </div>
+        </form>
+          <br/><br/>
+        <div class="clear" style="height:10px;"></div>
+            <ul class="nav nav-pills">
+                <li class="active"><a data-toggle="pill" data-target="#impressions">Impressions</a></li>
+                <li><a data-toggle="pill" data-target="#user">User Interests</a></li>
+                <li><a data-toggle="pill" data-target="#Location">Location</a></li>
+                <li><a data-toggle="pill" data-target="#budget">Budget</a></li>
+
+            </ul>
+            <br/><br/>
+            <div class="tab-content container-fluid" style="width:100%">
+                <div id="impressions" class="tab-pane fade in active" >
+                  <h3>Impressions</h3>
+
+                  <div id="container_impressions">
+                        <div class="loading">
+                            <i class="icon-spinner icon-spin icon-large"></i>
+                            Loading data...
+                        </div>
+                 </div>
+                 <div id="container_impression_2">
+                        <div class="loading">
+                            <i class="icon-spinner icon-spin icon-large"></i>
+                            Loading data...
+                        </div>
+                 </div>
+                 <div id="container_impression_3">
+                        <div class="loading">
+                            <i class="icon-spinner icon-spin icon-large"></i>
+                            Loading data...
+                        </div>
+                 </div>
+                </div>
+                <div id="user" class="tab-pane fade" >
+                  <h3>User Interests</h3>
+                <div id="container_user">
+                        <div class="loading">
+                            <i class="icon-spinner icon-spin icon-large"></i>
+                            Loading data...
+                        </div>
+                 </div>
+                    <br/>
+                  <div id="container_age" >
+                        <div class="loading">
+                            <i class="icon-spinner icon-spin icon-large"></i>
+                            Loading data...
+                        </div>
+                 </div>
+                  
+                </div>
+                <div id="Location" class="tab-pane fade">
+                  <h3>Location</h3>
+
+                  <div id="container_location" >
+                        <div class="loading">
+                            <i class="icon-spinner icon-spin icon-large"></i>
+                            Loading data...
+                        </div>
+                 </div>
+                </div>
+                <div id="budget" class="tab-pane fade">
+                  <h3>Budget</h3>
+
+                  <div id="container_budget" >
+                        <div class="loading">
+                            <i class="icon-spinner icon-spin icon-large"></i>
+                            Loading data...
+                        </div>
+                 </div>
+                </div>
+          </div>
+        </div>
+    </div>
+</div>

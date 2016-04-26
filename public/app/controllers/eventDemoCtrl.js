@@ -47,12 +47,14 @@ angular.module('eventDemoCtrl',[])
                 console.log("post sucess");
                 console.log(data.eventCounts);
                 for(var i=0; i< data.eventCounts.length;i++){
-                    vm.locations.push(data.eventCounts[i].region_name);
+                    //console.log(data.eventCounts[i].region_name.substring(0,2).toUpperCase());
+                    vm.locations.push(data.eventCounts[i].region_abbr);
                     vm.eventCount.push(data.eventCounts[i].noOfEvents);
                 }
                 console.log(vm.locations);
                  console.log(vm.eventCount);
                 vm.displayLocationChart(vm.locations, vm.eventCount);
+                 vm.budget(vm.locations, vm.eventCount);
             })
             .error(function(data) {
                     console.log('Error: ' + data);
@@ -166,7 +168,56 @@ angular.module('eventDemoCtrl',[])
     });
         
     }
+     vm.budget = function(locations, count){
+        
+        
+      Highcharts.chart('container_budget',{
+         chart: {
+            polar: true,
+            type: 'line'
+        },
 
+        title: {
+            text: 'Budget',
+            x: -80
+        },
+
+        pane: {
+            size: '80%'
+        },
+
+        xAxis: {
+            categories: locations,
+            tickmarkPlacement: 'on',
+            lineWidth: 0
+        },
+
+        yAxis: {
+            gridLineInterpolation: 'polygon',
+            lineWidth: 0,
+            min: 0
+        },
+
+        tooltip: {
+            shared: true,
+            pointFormat: '<span style="color:{series.color}">{series.name}: <b>${point.y:,.0f}</b><br/>'
+        },
+
+        legend: {
+            align: 'right',
+            verticalAlign: 'top',
+            y: 70,
+            layout: 'vertical'
+        },
+
+        series: [{
+            name: 'Allocated Budget',
+            data: [43000, 19000, 60000, 35000, 17000, 10000],
+            pointPlacement: 'on'
+        }]
+    });
+        
+}
 
      Highcharts.chart('container_cross', {
 
