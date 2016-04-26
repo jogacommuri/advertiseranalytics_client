@@ -13,18 +13,29 @@
             <!-- form start -->
             <form ng-submit="user.signupUser()">
               <div class="form-group">
-                <input type="text" class="form-control text-center" placeholder="Enter your First Name" ng-model="user.userData.fname">
+                <input type="text" class="form-control text-center" placeholder="Enter your First Name" ng-model="user.userData.fname" 
+             ng-minlength="7"
+              required="required">
               </div>
               <div class="form-group">
-                <input type="text" class="form-control text-center" placeholder="Enter your Last Name" ng-model="user.userData.lname">
+                <input type="text" class="form-control text-center" placeholder="Enter your Last Name" ng-model="user.userData.lname" 
+             ng-minlength="7"
+             ng-pattern-err-type="badUsername" required="required">
               </div>
               <div class="form-group">
-                <input type="email" class="form-control text-center" placeholder="Enter your Email address" ng-model="user.userData.email">
+                <input type="email" class="form-control text-center" placeholder="Enter your Email address" ng-model="user.userData.email" required="required" >
               </div>
               <div class="form-group">
-                <input type="password" class="form-control text-center" placeholder="Enter your password" ng-model="user.userData.password"/>
+                <input type="password" class="form-control text-center" placeholder="Enter your password" ng-model="user.userData.password" required="required"
+             ng-minlength="8"/>
               </div>
-              <button class="btn bg-btn-green log-in-btn" type="submit" >Sign Up</button>
+                <button class="btn bg-btn-green log-in-btn"
+              ladda="submitting"
+              data-style="expand-right"
+              type="submit">
+        <span ng-show="submitting">Registering</span>
+        <span ng-show="!submitting">Register</span>
+      </button>
             </form>
             <!-- form end --> 
           </div>
