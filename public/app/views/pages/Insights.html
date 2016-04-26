@@ -37,7 +37,6 @@
                
                     <a data-toggle="dropdown"><span class="sclicons" style="font-size:20px;color:whitesmoke"> <i class="fa fa-tachometer"></i></span> Events Dashboard</a>
                     <ul class="dropdown-menu">
-                      <li><a href="/events">Search Events</a></li>
                       <li><a href="/eventDashboard">Geographics</a></li>
                       <li><a href="/eventDemographics">Demographics</a></li>
                     </ul>
@@ -77,71 +76,41 @@
             <ul class="nav nav-pills">
                 <li class="active"><a data-toggle="pill" data-target="#impressions">Impressions</a></li>
                 <li><a data-toggle="pill" data-target="#user">User Interests</a></li>
-                <li><a data-toggle="pill" data-target="#Location">Location</a></li>
-                <li><a data-toggle="pill" data-target="#budget">Budget</a></li>
+
 
             </ul>
             <br/><br/>
+            <div class="loading" ng-show="insight.loading">
+                            <i class="icon-spinner icon-spin icon-large"></i>
+                            Loading data...
+                        </div>
             <div class="tab-content container-fluid" style="width:100%">
                 <div id="impressions" class="tab-pane fade in active" >
                   <h3>Impressions</h3>
 
                   <div id="container_impressions">
-                        <div class="loading">
-                            <i class="icon-spinner icon-spin icon-large"></i>
-                            Loading data...
-                        </div>
+                   
                  </div>
                  <div id="container_impression_2">
-                        <div class="loading">
-                            <i class="icon-spinner icon-spin icon-large"></i>
-                            Loading data...
-                        </div>
+
                  </div>
                  <div id="container_impression_3">
-                        <div class="loading">
-                            <i class="icon-spinner icon-spin icon-large"></i>
-                            Loading data...
-                        </div>
+      
                  </div>
                 </div>
                 <div id="user" class="tab-pane fade" >
                   <h3>User Interests</h3>
                 <div id="container_user">
-                        <div class="loading">
-                            <i class="icon-spinner icon-spin icon-large"></i>
-                            Loading data...
-                        </div>
+                     
                  </div>
                     <br/>
                   <div id="container_age" >
-                        <div class="loading">
-                            <i class="icon-spinner icon-spin icon-large"></i>
-                            Loading data...
-                        </div>
+                        
                  </div>
                   
                 </div>
-                <div id="Location" class="tab-pane fade">
-                  <h3>Location</h3>
-
-                  <div id="container_location" >
-                        <div class="loading">
-                            <i class="icon-spinner icon-spin icon-large"></i>
-                            Loading data...
-                        </div>
-                 </div>
-                </div>
-                <div id="budget" class="tab-pane fade">
-                  <h3>Budget</h3>
-
-                  <div id="container_budget" >
-                        <div class="loading">
-                            <i class="icon-spinner icon-spin icon-large"></i>
-                            Loading data...
-                        </div>
-                 </div>
-                </div>
+                
+                
           </div>
         </div>
     </div>

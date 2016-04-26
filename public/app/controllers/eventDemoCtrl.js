@@ -11,8 +11,10 @@ angular.module('eventDemoCtrl',[])
     vm.femaleData = [];
     vm.locations = [];
     vm.eventCount = [];
+    vm.loading=false;
     //event get
         vm.getCategory =  function(){
+            vm.loading=true;
             console.log("getcat");
             console.log(vm.eventName);
             vm.postData = {};
@@ -34,6 +36,7 @@ angular.module('eventDemoCtrl',[])
                /* console.log(event.data);*/
                 //event.displayMap(event.data);
                 vm.displayAgeChart(vm.maleData, vm.femaleData);
+                vm.loading=false;
             })
             .error(function(data) {
                     console.log('Error: ' + data);

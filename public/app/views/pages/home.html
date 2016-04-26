@@ -35,7 +35,6 @@
               <li>
                     <a data-toggle="dropdown"><span class="sclicons" style="font-size:20px;color:whitesmoke"> <i class="fa fa-tachometer"></i></span> Events Dashboard</a>
                     <ul class="dropdown-menu">
-                      <li><a href="/events">Search Events</a></li>
                       <li><a href="/eventDashboard">Geographics</a></li>
                       <li><a href="/eventDemographics">Demographics</a></li>
                     </ul>
@@ -60,35 +59,54 @@
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
           <div class="row">
-            <button class="btn bg-btn-green" type="button" ng-click="home.search(home.keyword)">SEARCH</button>
+            <button class="btn bg-btn-green" type="button" data-section="#events" ng-click="home.search(home.keyword)">SEARCH</button>
             <!--<button class="btn bg-btn-green" type="button" style="display: none;">SEARCH</button> -->  
 
           </div>
         </div>
       <div class="row">
-          <div class="col-md-5" >
-              <div id="scroll" style="
-    margin-top: 30px;">
-                <h4>Trending</h4>
-                <ul class="clearfix" >
-                  <li ng-repeat="trending in trendings"><a href="#events" ng-click="home.search(trending.category_id)"><img ng-src="images/home-thumb/{{trending.category_id}}.png" alt="" width="200" height="200">
-                  <span>{{trending.category_name}}</span></a>
-                  <h6><button class="btn bg-btn-success" ng-click="home.follow(trending.category_id,trending.category_name)">Follow</button></h6>
-                  </li>
-                </ul>
-              </div>
+          <br/><br/>
+          <div class="container-fluid">
+            <ul class="nav nav-pills">
+                <li class="active"><a data-toggle="pill" data-target="#trending">Trending</a></li>
+                <li><a data-toggle="pill" data-target="#following">Following</a></li>        
+            </ul>
           </div>
-          <div class="col-md-5 col-md-offset-1" >
-          <div id="scroll" style="
-    margin-top: 30px;">
-                <h4>Following</h4>
-                <ul class="clearfix" >
-                  <li ng-repeat="interest in interests"><a href="#events" ng-click="home.search(interest.category_id)"><img ng-src="images/home-thumb/{{interest.category_id}}.png" alt="" width="200" height="200">
-                  <span>{{interest.category_name}}</span></a>
-                  <h6><button class="btn bg-btn-danger" ng-click="home.unfollow(interest.category_id)">Unfollow</button></h6>
-                  </li>
-                </ul>
-              </div>
+          
+            <br/><br/>
+            <div class="tab-content container-fluid" style="width:100%">
+                <div id="trending" class="tab-pane fade in active" >
+                  <h3>Trending</h3>
+                  
+                  <div id="scroll" style="margin-top: 30px;">
+                    <h4>Trending</h4>
+                    <ul class="clearfix" >
+                      <li ng-repeat="trending in trendings">
+                          <a ng-click="home.search(trending.category_id)">
+                              <img ng-src="images/home-thumb/{{trending.category_id}}.png" alt="" width="200" height="200">
+                                <span>{{trending.category_name}}</span>
+                          </a>
+                      <h6>
+                          <button class="btn bg-btn-success" ng-click="home.follow(trending.category_id,trending.category_name)">Follow</button>
+                          </h6>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div id="following" class="tab-pane fade" >
+                  <h3>Following</h3>
+                  
+                  <div id="scroll" style="margin-top: 30px;">
+                    <h4>Following</h4>
+                    <ul class="clearfix" >
+                      <li ng-repeat="interest in interests"><a  ng-click="home.search(interest.category_id)"><img ng-src="images/home-thumb/{{interest.category_id}}.png" alt="" width="200" height="200">
+                      <span>{{interest.category_name}}</span></a>
+                      <h6><button class="btn bg-btn-danger" ng-click="home.unfollow(interest.category_id)">Unfollow</button></h6>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                
           </div>
       </div>
         <div class="contener-main" id="events">

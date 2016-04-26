@@ -3,7 +3,7 @@ angular.module('homeCtrl',['angularUtils.directives.dirPagination'])
     .controller('homeCtrl',function($scope,$http,$window){
     var vm =  this;
     $scope.token= $window.localStorage.getItem('accessToken');
-     vm.userDetails = JSON.parse($window.localStorage.getItem('user'));
+     
     
     vm.title = "home";
     vm.events=null;
@@ -17,6 +17,8 @@ angular.module('homeCtrl',['angularUtils.directives.dirPagination'])
             .success(function(data){
                 $scope.interests=data.data.interests;
                 $window.localStorage.setItem('user',JSON.stringify(data.data));
+                $scope.fname=data.data.fname;
+                vm.userDetails = JSON.parse($window.localStorage.getItem('user'));
             
             })
             .error(function(data) {
