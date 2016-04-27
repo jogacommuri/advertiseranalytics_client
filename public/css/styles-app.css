@@ -29,6 +29,10 @@ body {
 	font-family: 'GothamRounded-Book', sans-serif;
 	color: #404040;
 	background: #F7F7F8;
+    overflow-x: hidden;
+}
+#wrapper {
+     overflow-x: hidden;
 }
 .body-bg {
 	background: #3D344A;

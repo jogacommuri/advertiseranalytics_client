@@ -52,6 +52,7 @@ a:hover {
 @media(min-width:768px) {
 body {
 	margin-top: 50px;
+    overflow-x: hidden
 }
 }
 #wrapper {
@@ -70,6 +71,9 @@ body {
 @media(min-width:768px) {
 #wrapper {
 	padding-left: 225px;
+}
+    #wrapper {
+     overflow-x: hidden;
 }
 #page-wrapper {
 	padding: 30px 15px;
