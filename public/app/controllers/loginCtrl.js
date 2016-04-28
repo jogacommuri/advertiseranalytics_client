@@ -20,6 +20,7 @@ angular.module('loginCtrl',['userService'])
              $location.path('/home');
             })
             .error(function(data) {
+                sweetAlert('Errror',data,'error');
 				console.log('Error: ' + data);
 			});
 //         $location.path('/home');

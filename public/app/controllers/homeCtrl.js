@@ -7,6 +7,8 @@ angular.module('homeCtrl',['angularUtils.directives.dirPagination'])
     vm.title = "home";
     vm.events=null;
     $scope.sweetalert=false;
+    $scope.getaddDetails=true;
+    $scope.recomendations=false;
      vm.token = {};
     
     vm.getCategories=function(token){
@@ -35,4 +37,32 @@ angular.module('homeCtrl',['angularUtils.directives.dirPagination'])
 			});
     
     };
+    vm.getRecomendations=function(category){
+    alert(category);
+        $scope.getaddDetails=false;
+        $scope.recomendations=true;
+        $http({
+            method:'POST',
+            url:'http://advanalytics.herokuapp.com/getEvents',
+            data: { "category": category}
+        }).success(function(data){
+                if(data.totalNoOfEvents===0){
+                    sweetAlert("No events found ",'',"error");
+                }
+                else{
+                    for(var i=0;i<data.events.length;i++){
+                        if(data.events[i].image_url!=null){
+                            data.events[i].image_url=data.events[i].image_url.replace(/\/small\//,'/medium/');
+                        }   
+                        else{
+                            data.events[i].image_url="images/home-thumb/"+data.events[i].category_id+".png";
+                        }
+                    }
+                    vm.events=data.events;
+                }
+
+        }).error(function(error) {
+            sweetAlert("Oops! some thing went wrong",error,"error");
+        });
+    }
 });
