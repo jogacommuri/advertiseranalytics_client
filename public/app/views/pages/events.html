@@ -1,6 +1,5 @@
-<div class="container-fluid" ng-controller="eventCtrl as event">
+<div class="container-fluid" ng-controller="eventsCtrl as home" ng-init="home.getCategories()">
     <div id="wrapper"> 
-  
       <!-- Navigation -->
       <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation"> 
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -8,13 +7,14 @@
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
           <a class="navbar-brand" href="/home">Advertiser Analytics</a> </div>
         <!-- Top Menu Items -->
-        <div class="top-title">Welcome <strong>{{event.profileData.fname}}</strong>, You have 3 notifications</div>
+        <div class="top-title">Welcome <strong>{{home.userDetails.fname}}</strong>, You have 3 notifications</div>
         <ul class="nav navbar-right top-nav">
           <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="images/ger-icon.png" alt="user"/></a>
             <ul class="dropdown-menu">
               <li class="icon-drop"></li>
               <li> <a href="/profile"><i class="fa fa-fw fa-user"></i> Profile</a> </li>
-                <li> <a ng-click="event.logout()" ><i class="fa fa-fw fa-user"></i> Logout</a> </li>
+              <li> <a ng-click="home.logout()" ><i class="fa fa-fw fa-user"></i> Logout</a> </li>
+
             </ul>
           </li>
           <li class="dropdown"> <a href="#" class="dropdown-toggle my-dropdown" data-toggle="dropdown"><img src="images/bell-icon.png" alt="bell"/></a>
@@ -29,16 +29,15 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul class="nav navbar-nav side-nav">
             <li class="admin-pic"> <img src="images/Oval 1.png" alt="ovel" />
-              <h4>{{event.profileData.fname}}</h4>
+              <h4>{{home.userDetails.fname}}</h4>
               <p>Admin</p>
             </li>
               <li><a href="/home"><span class="sclicons" style="font-size:20px;color:whitesmoke"><i class="fa fa-home"></i></span> Home</a> </li>
               <li>
-               
-                    <a data-toggle="dropdown"><span class="sclicons" style="font-size:20px;color:whitesmoke"> <i class="fa fa-tachometer"></i></span> Events</a>
+                    <a data-toggle="dropdown"><span class="sclicons" style="font-size:20px;color:whitesmoke"> <i class="fa fa-tachometer"></i></span> Events Dashboard</a>
                     <ul class="dropdown-menu">
-                          <li><a href="/eventDashboard">Geographics</a></li>
-                          <li><a href="/eventDemographics">Demographics</a></li>
+                      <li><a href="/eventDashboard">Geographics</a></li>
+                      <li><a href="/eventDemographics">Demographics</a></li>
                     </ul>
               </li> 
                   
@@ -53,52 +52,108 @@
         <div class="col-lg-8 col-sm-8 col-md-8 col-xs-12">
           <div class="row">
             <div class="search-query02">
-              <select class="form-control" ng-model="keyword">
-                    <option value="conference">Conference</option>
-                    <option value="music">Music</option>
-                    <option value="religion_spirituality">Spirtuality</option>
-                    <option value="religion_spirituality">Religion</option>
+              <select class="form-control" ng-model="home.keyword" >
+                    <option ng-repeat="trending in trendings"  ng-value='trending.category_id'>{{trending.category_name}}</option>
               </select>
             </div>
           </div>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
           <div class="row">
-            <button class="btn bg-btn-green" type="button" ng-click="search()">SEARCH</button>
-            <button class="btn bg-btn-green" type="button" style="display: none;">SEARCH</button>   
+            <button class="btn bg-btn-green" type="button" data-section="#events" ng-click="home.search(home.keyword)">SEARCH</button>
+            <!--<button class="btn bg-btn-green" type="button" style="display: none;">SEARCH</button> -->  
 
           </div>
         </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 top-hr">
-        </div>
-        <div class="clear"></div>
-        <div class="contener-main">
+      <div class="row">
+          <br/><br/>
+          <div class="container-fluid">
+            <ul class="nav nav-pills">
+                <li class="active"><a data-toggle="pill" data-target="#trending">Trending</a></li>
+                <li><a data-toggle="pill" data-target="#following">Following</a></li>        
+            </ul>
+          </div>
+          
+            <br/><br/>
+            <div class="tab-content container-fluid" style="width:100%">
+                <div id="trending" class="tab-pane fade in active" >
+                  <h3>Trending</h3>
+                  
+                  <div id="scroll" style="margin-top: 30px;">
+                    <h4>Trending</h4>
+                    <ul class="clearfix" >
+                      <li ng-repeat="trending in trendings">
+                          <a ng-click="home.search(trending.category_id)">
+
+                              <img ng-src="images/home-thumb/{{trending.category_id}}.png" alt="" width="200" height="200">
+                                <span>{{trending.category_name}}</span>
+                          </a>
+                      <h6>
+                          <button class="btn bg-btn-success" ng-click="home.follow(trending.category_id,trending.category_name)">Follow</button>
+                          </h6>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div id="following" class="tab-pane fade" >
+                  <h3>Following</h3>
+                  
+                  <div id="scroll" style="">
+                    <h4>Following</h4>
+                    <ul class="clearfix" >
+                      <li ng-repeat="interest in interests"><a  ng-click="home.search(interest.category_id)"><img ng-src="images/home-thumb/{{interest.category_id}}.png" alt="" width="200" height="200">
+
+                      <span>{{interest.category_name}}</span></a>
+                      <h6><button class="btn bg-btn-danger" ng-click="home.unfollow(interest.category_id)">Unfollow</button></h6>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                
+          </div>
+      </div>
+        <div class="contener-main" id="events">
           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin">        
             <div class="row">
-              <div dir-paginate="event in events| itemsPerPage: 12">
+              <div dir-paginate="event in home.events| itemsPerPage: 12">
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 border">
-                        <a ng-href="{{event.url}}"><img ng-src="{{event.image_url}}" width="200px" height="200px" />
+                        <a ng-href="{{event.url}}" target="_blank"><img ng-src="{{event.image_url}}" width="200px" height="200px" />
                         <span color="black"> <h6 class="font">{{event.start_time |date}}</h6>
                         <h6 class="font">{{event.title}}</h6></span>
                         </a>
                         <hr></hr>
-                        #{{event.eventid}}
+                        #{{event.category_id}}
                     </div>
 
               </div>
 
             </div>
-            <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="js/dirPagination.tpl.html"></dir-pagination-controls>
+            <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="./app/js/dirPagination.tpl.html"></dir-pagination-controls>
           </div>
 
         </div>
+        <!--<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="border:1px solid #ccc; text-align:right">
+          <img class="img-responsive" src="./images/home-thumb/Tech.jpg" style="height:150px;">
+            <button class="btn btn-sm btn-danger" type="button" ng-click="add()" >+ Add</button>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="border:1px solid #ccc; text-align:right">
+          <img class="img-responsive" src="./images/home-thumb/music.jpg" style="height:150px;">
+            <button class="btn btn-sm btn-danger" type="button" ng-click="add()" >+ Add</button>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="border:1px solid #ccc; text-align:right">
+          <img class="img-responsive" src="./images/home-thumb/sports.jpg" style="height:150px;">
+            <button class="btn btn-sm btn-danger" type="button" ng-click="add()" >+ Add</button>
+        </div>-->
         <div class="clear"></div>
       </div>
       <div class="clear"></div>
       <!-- /#page-wrapper --> 
 
     </div>
+    
 <!-- /#wrapper --> 
 </div>
-    
-    
+
+
+
+

@@ -1,10 +1,14 @@
 angular.module('appRoutes', ['ngRoute'])
 	.config(function($routeProvider, $locationProvider){
 		$routeProvider
-			.when('/home',{
+            .when('/home',{
 				templateUrl: 'app/views/pages/home.html',
 				controller: 'homeCtrl',
-				controllerAs: 'home'
+                controllerAs: 'home'
+			})
+			.when('/events',{
+				templateUrl: 'app/views/pages/event.html',
+				controller: 'eventsCtrl'
 			})
 			.when('/',{
 				templateUrl: 'app/views/pages/login.html',
