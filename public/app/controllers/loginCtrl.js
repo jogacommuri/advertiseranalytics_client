@@ -9,7 +9,7 @@ angular.module('loginCtrl',['userService'])
     $scope.submitting = false;
     
      vm.signinUser=function(signinData){
-         console.log(vm.signinData);
+         //console.log(vm.signinData);
          
          $http.post('http://advanalytics.herokuapp.com/users/login',vm.signinData)
             .success(function(data){
@@ -30,7 +30,7 @@ angular.module('loginCtrl',['userService'])
     vm.signupUser = function(userData){
         $scope.submitting = true;
         console.log("signup");
-        console.log(vm.userData);
+       // console.log(vm.userData);
        $http.post('http://advanalytics.herokuapp.com/users/signup',vm.userData)
             .success(function(data){
              console.log("signup post success");
