@@ -11,7 +11,7 @@ angular.module('eventCtrl',[])
             console.log("post sucess");
             console.log(data);
              event.data = data.results;
-           /* console.log(event.data);*/
+            console.log(event.data);
             event.displayMap(event.data);
         })
         .error(function(data) {

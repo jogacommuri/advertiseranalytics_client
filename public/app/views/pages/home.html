@@ -49,78 +49,167 @@
         </div>
         <!-- /.navbar-collapse --> 
       </nav>
-    </div>
+    
     <br/><br/><br/>
-<div ng-show="getaddDetails">
-    <div class="row">
-      <div class="col-md-2 col-md-offset-4">
-          <h4 style="
-    margin-bottom: 18px;
-">Product Name</h4>
-          <h4 style="
-    margin-bottom: 0px;
-">Product Category</h4>
-          <h4 style="
-    margin-bottom: 18px;
-    margin-top: 23px;
-">Age</h4>
-          <h4>Location</h4>
-      </div>
-      <div class="col-md-5">
-            <div class="form-group">
-                <input type="text" class="form-control text-center" placeholder=""  
-              required="required">
-            </div>
-            <div class="form-group">
-              <select class="form-control" ng-model="home.keyword" >
-                    <option ng-repeat="trending in trendings"  ng-value='trending.category_id'>{{trending.category_name}}</option>
-              </select>
-            </div>
-            <div class="form-group">
-                <input type="text" class="form-control text-center" placeholder=""  >
-            </div>
-            <div class="form-group">
-                <input type="text" class="form-control text-center" placeholder=""  >
-            </div>
-      </div>
-    </div>
-    <br/>
-    <div class="row">
-      <div class="col-md-8 col-md-offset-1">
-          <button class="btn bg-btn-green" style="font-size:18px;" type="button" data-section="#events" ng-click="home.getRecomendations(home.keyword)" >Get Recomendations</button>
-      </div>
-    </div>
-</div>
-<div ng-show="recomendations">
-  <div class="container-fluid">
-      <div class="col-md-offset-2">
-      <ul class="nav nav-pills">
-          <li class="active"><a data-toggle="pill" data-target="#events">Events</a></li>
-          <li><a data-toggle="pill" data-target="#following">Geographics</a></li> 
-          <li><a data-toggle="pill" data-target="#following">Demographics</a></li>   
-          <li><a data-toggle="pill" data-target="#following">Insights</a></li>        
-      </ul>
-       <div class="contener-main" id="events">
-          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin">        
+        <div ng-show="getaddDetails">
             <div class="row">
-              <div dir-paginate="event in home.events| itemsPerPage: 12">
-                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 border">
-                        <a ng-href="{{event.url}}" target="_blank"><img ng-src="{{event.image_url}}" width="200px" height="200px" />
-                        <span color="black"> <h6 class="font">{{event.start_time |date}}</h6>
-                        <h6 class="font">{{event.title}}</h6></span>
-                        </a>
-                        <hr></hr>
-                        #{{event.category_id}}
+              <!--<div class="col-md-2 col-md-offset-4">
+
+                  <h4 style="
+            margin-bottom: 0px;
+        ">Product Category</h4>
+                  <h4 style="
+            margin-bottom: 18px;
+            margin-top: 23px;
+        ">Age</h4>
+                  <h4>Location</h4>
+              </div>-->
+              <div class="col-md-10">
+                  <form ng-submit="home.getRecomendations()">
+                      <h2>Add Advertisement Details</h2><br/<br/>
+                    <div class="form-group row">
+                        <label for="product_name" class="col-md-3">
+                            <h4 style="margin-bottom: 18px;">Product Name</h4>  
+                        </label>
+                        <div class="col-md-7">
+                        <input id="product_name" type="text" class="form-control text-center" placeholder=""  
+                      required="required" >
+                        </div>
                     </div>
+                    <div class="form-group row">
+                        <label for="categories"  class="col-md-3">
+                            <h4 style="margin-bottom: 18px;">Product Category</h4>  
+                        </label>
+                        <div class="col-md-7">
+                      <select id="categories" class="form-control" ng-model="home.category" required="required" >
+                            <option ng-repeat="trending in trendings"  ng-value='trending.category_id'>{{trending.category_name}}</option>
+                      </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="age"  class="col-md-3">
+                            <h4 style="margin-bottom: 18px;">Target Age group</h4>  
+                        </label>
+                        <div class="col-md-7">
+                        <select id="age" class="form-control" >
+                            <option ng-repeat="age in home.ages"  ng-value='age'>{{age}}</option>
+                      </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="location"  class="col-md-3">
+                            <h4 style="margin-bottom: 18px;">State</h4>  
+                        </label>
+                        <div class="col-md-7">
+                            <select id="age" class="form-control" ng-model="home.state">
+                            <option ng-repeat="state in home.states"  ng-value='state'>{{state}}</option>
+                      </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-8 col-md-offset-1">
+                          <button class="btn bg-btn-green" style="font-size:18px;" type="submit" data-section="#events"  >Get Events</button>
+                      </div>
+                    </div>
+                  </form>
 
               </div>
-
             </div>
-            <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="./app/js/dirPagination.tpl.html"></dir-pagination-controls>
-          </div>
+            <br/>
 
         </div>
+        <div ng-show="recomendations">
+            <div class="row">
+                <div class="col-md-2 col-md-offset-9" style="text-align: left;">
+                    <button class="btn bg-btn-green"type="button" ng-click="home.back()" >Back</button>
+              
+                </div>
+            </div>
+            <br/><br/>
+          <div class="container-fluid">
+              
+              <ul class="nav nav-pills">
+                  <li class="active"><a data-toggle="pill" data-target="#events">Events</a></li>
+                  <li><a data-toggle="pill" data-target="#geo">Geographics</a></li> 
+                  <li><a data-toggle="pill" data-target="#demo">Demographics</a></li>         
+              </ul>
+              <div class="tab-content container-fluid">
+               <div class="tab-pane fade in active" id="events">
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">        
+                    <div class="row">
+                      <div dir-paginate="event in home.events| itemsPerPage: 12">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 border">
+                                <a ng-href="{{event.url}}" target="_blank"><img ng-src="{{event.image_url}}" width="200px" height="200px" />
+                                <span color="black"> <h6 class="font">{{event.start_time |date}}</h6>
+                                <h6 class="font">{{event.title}}</h6></span>
+                                </a>
+                                <hr></hr>
+                                #{{event.category_id}}
+                            </div>
+
+                      </div>
+
+                    </div>
+                    <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="./app/js/dirPagination.tpl.html"></dir-pagination-controls>
+                  </div>
+
+                </div>
+                <div id="geo" class="tab-pane fade" >
+                  <h3>Geographics</h3>
+                  
+                  <div id="container_geo" >
+                 </div>
+                </div>
+                <div id="demo" class="tab-pane fade">
+                  <h3>Demographics</h3>
+                
+                    <div class="clear" style="height:10px;"></div>
+            <div class="col-md-3">
+                <br/><br/>
+                <ul class="nav nav-pills nav-stacked">
+                    <li class="active"><a data-toggle="pill" data-target="#graph1">Age &amp; Gender</a></li>
+                    <li><a data-toggle="pill" data-target="#graph2">Cross Device</a></li>
+                    <li><a data-toggle="pill" data-target="#graph3">Location</a></li>
+                </ul>
+            </div>
+            <br/><br/>
+            <div class="loading" ng-show="event.loading">
+                <i class="icon-spinner icon-spin icon-large"></i>
+                    Loading data...
+            </div>
+            <div class="tab-content container-fluid" style="width:100%">
+                <div id="graph1" class="col-md-8 tab-pane fade in active" >
+                  <h3>Age &amp; Gender</h3>
+                  
+                  <div id="container_graph1" >
+                        
+                 </div>
+                </div>
+                <div id="graph2" class="col-md-8 tab-pane fade" >
+                  <h3>Cross Device</h3>
+                  
+                  <div id="container_graph2" >
+                 </div>
+                </div>
+                <div id="graph3" class="col-md-8 tab-pane fade">
+                  <h3>Location</h3>
+                  
+                  <div id="container_graph3" >
+
+                 </div>
+                </div>
+                <div id="budget" class="col-md-8 tab-pane fade">
+                  <h3>Budget</h3>
+                  
+                  <div id="container_budget" >
+
+                 </div>
+                </div>
+          </div>
+                    
+                </div>
+            </div>
+            </div>
+        </div>
     </div>
-    </div>
-</div>
 </div>

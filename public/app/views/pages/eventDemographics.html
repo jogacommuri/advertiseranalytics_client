@@ -86,40 +86,43 @@
         </div>-->
             <br/><br/>
            <div class="clear" style="height:10px;"></div>
-            <ul class="nav nav-pills">
-                <li class="active"><a data-toggle="pill" data-target="#age">Age &amp; Gender</a></li>
-                <li><a data-toggle="pill" data-target="#crossdev">Cross Device</a></li>
-                <li><a data-toggle="pill" data-target="#Location">Location</a></li>
-                <li><a data-toggle="pill" data-target="#budget">Budget</a></li>
-                
-            </ul>
+            <div class="col-md-3">
+                <br/><br/>
+                <ul class="nav nav-pills nav-stacked">
+                    <li class="active"><a data-toggle="pill" data-target="#age">Age &amp; Gender</a></li>
+                    <li><a data-toggle="pill" data-target="#crossdev">Cross Device</a></li>
+                    <li><a data-toggle="pill" data-target="#Location">Location</a></li>
+                    <li><a data-toggle="pill" data-target="#budget">Budget</a></li>
+
+                </ul>
+            </div>
             <br/><br/>
             <div class="loading" ng-show="event.loading">
                 <i class="icon-spinner icon-spin icon-large"></i>
                     Loading data...
             </div>
             <div class="tab-content container-fluid" style="width:100%">
-                <div id="age" class="tab-pane fade in active" >
+                <div id="age" class="col-md-8 tab-pane fade in active" >
                   <h3>Age &amp; Gender</h3>
                   
                   <div id="container_age" >
                         
                  </div>
                 </div>
-                <div id="crossdev" class="tab-pane fade" >
+                <div id="crossdev" class="col-md-8 tab-pane fade" >
                   <h3>Cross Device</h3>
                   
                   <div id="container_cross" >
                  </div>
                 </div>
-                <div id="Location" class="tab-pane fade">
+                <div id="Location" class="col-md-8 tab-pane fade">
                   <h3>Location</h3>
                   
                   <div id="container_location" >
 
                  </div>
                 </div>
-                <div id="budget" class="tab-pane fade">
+                <div id="budget" class="col-md-8 tab-pane fade">
                   <h3>Budget</h3>
                   
                   <div id="container_budget" >
