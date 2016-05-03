@@ -433,15 +433,43 @@ angular.module('insightCtrl',[])
 
 }
 
+vm.centroids = [];
+vm.cluster1 = [];
+vm.cluster2 = [];
+vm.getClusterDetails = function(){
+
+  $http.post('http://advanalytics.herokuapp.com/findCategory', {name: "nike mens shoes"})
+            .success(function(data){
+                console.log("post sucess");
+                console.log(data.clusterResponse);
+
+                for(var i=0; i < data.clusterResponse.length; i++){
+                    vm.centroids.push(data.clusterResponse[i].centroid);
+                     if(i == 0){
+                        vm.cluster1.push(data.clusterResponse[i].cluster);
+                     }
+                     if(i == 1){
+                        vm.cluster2.push(data.clusterResponse[i].cluster);
+                     }
+                }
+                console.log(vm.centroids);
+                console.log(vm.cluster1);
+                console.log(vm.cluster2);
+
+                vm.displayClusterChart();
+
+            })
+            .error(function(data) {
+                    console.log('Error: ' + data);
+                });
+
+}
+
  // cluster 
 
-    var centroids = [ [11, 5.6],[-4,5]];
-      var cluster1 = [[12, 1.6], [13, 9.0], [10, 4.2], [5, 3.0], [4, 3.6],
-                [1, 5.0], [2, 7.6], [3, 6.8], [4, 6.8]];
-      var cluster2 = [[-1.0, 5.6], [-2, 1.8], [-3, 8.7], [-4, 2.6], [-7, 8.8],
-                [-10, 4.8], [-11, 6.4], [-12, 7.4], [-13, 2.0], [-4.0, 1.6]];
-  
-    Highcharts.chart( {
+   vm.displayClusterChart = function(){
+
+      Highcharts.chart( {
 
       
 
@@ -485,7 +513,7 @@ angular.module('insightCtrl',[])
         plotOptions: {
             scatter: {
                 marker: {
-                    radius: 10,
+                    radius: 5,
                     states: {
                         hover: {
                             enabled: true,
@@ -502,26 +530,29 @@ angular.module('insightCtrl',[])
                 },
                 tooltip: {
                     headerFormat: '<b>{series.name}</b><br>',
-                    pointFormat: '{point.x} cm, {point.y} kg'
+                    pointFormat: '{point.x} , {point.y}'
                 }
             }
         },
         series: [{
             name: 'Positive',
             color: 'rgba(223, 83, 83, .5)',
-            data: cluster1
+            data: vm.cluster1[0]
 
         }, {
             name: 'Negative',
             color: 'rgba(119, 152, 191, .5)',
-            data: cluster2
+            data: vm.cluster2[0]
         },
          {
             name: 'centroid',
             color: 'rgba(0,0,0,0.5)',
-            data: centroids
+            data: vm.centroids
         }
         ]
                 });
+   }
+  
+    
 
 });
