@@ -86,7 +86,7 @@ angular.module('homeCtrl',['angularUtils.directives.dirPagination'])
                     vm.locations.push(data.eventCounts[i].region_abbr.toUpperCase());
                 
                     vm.eventCount.push(data.eventCounts[i].noOfEvents);
-                    vm.eventData.push({'hc-key':data.eventCounts[i].region_abbr,'value':data.eventCounts[i].noOfEvents});
+                    vm.eventData.push({'hc-key':data.eventCounts[i].region_abbr,'value':data.eventCounts[i].noOfEvents,'drilldown':data.eventCounts[i].region_abbr});
                
                 }
                 console.log(vm.locations);
@@ -196,71 +196,156 @@ angular.module('homeCtrl',['angularUtils.directives.dirPagination'])
     vm.displayMap = function(data){
             Highcharts.Map( {
 
-              chart: {
-                                renderTo: 'container_geo',
-                                type: 'map',
-                                height: 600,
-                                weight: 500,
-                                backgroundColor: "#eee"
-                            },
-                         title: {
-              text: 'Events data in the US'
-            },
+      chart: {
+                        renderTo: 'container_geo',
+                        type: 'map',
+                        
 
-            subtitle: {
-              text: null
-            },
-            legend: {
-                    layout: 'vertical',
-                    borderWidth: 0,
-                    backgroundColor: 'rgba(255,255,255,0.85)',
-                    floating: 'true',
-                    align:'left'
-
-                },
-            mapNavigation: {
-              enabled: true,
-              buttonOptions: {
-                verticalAlign: 'bottom'
-              }
-            },
-
-            colorAxis: {
-              min: 0
-                    },
-
-            series: [{
-              data: vm.eventData,
-              mapData: Highcharts.maps['countries/us/us-all'],
-              joinBy: 'hc-key',
-              name: 'Event data',
-              states: {
-                hover: {
-                  color: '#BADA55'
-                }
-              },
-              dataLabels: {
-                enabled: true,
-                format: '{point.name}'
-              },
-               /* point: {
                         events: {
-                            click: pointClick
-                        }
-                    },*/
-                 tooltip: {
-                        pointFormat: '{point.name}:<br> {point.event} :{point.value}'
-            }
+                        
+                        drilldown: function (e){
+                        alert("inside drilldown");
+                        if (!e.seriesOptions) {
+                           var chart = this,
+                            mapKey = 'countries/us/'+e.point.drilldown+'-all',
+                            // Handle error, the timeout is cleared on success
+                            fail = setTimeout(function () {
+                                if (!Highcharts.maps[mapKey]) {
+                                    chart.showLoading('<i class="icon-frown"></i> Failed loading ' + e.point.name);
+
+                                    fail = setTimeout(function () {
+                                        chart.hideLoading();
+                                    }, 1000);
+                                }
+                            }, 3000);
+                          alert(mapKey);
+                        // Show the spinner
+                        chart.showLoading('<i class="icon-spinner icon-spin icon-3x"></i>'); // Font Awesome spinner
+
+                        // Load the drilldown map
+                        $.getScript('https://code.highcharts.com/mapdata/' + mapKey + '.js', function () {
+
+                            data = Highcharts.geojson(Highcharts.maps[mapKey]);
+
+                            // Set a non-random bogus value
+                            //console.log(data.length);
+                            vm.cityData = {};
+                            $http.post('http://advanalytics.herokuapp.com/getEventsInCity', {state: e.point.name, category_id: vm.adData.category})
+            .success(function(data1){
+                console.log(data1.data);
+               vm.cityData = data1.data;
+
+               vm.city(vm.cityData);
+               
+            })
+            .error(function(data) {
+                    console.log('Error: ' + data);
+
+                });
+
+                    vm.city = function(cityData){ 
+                        $.each(data, function (i) {
+                                console.log((data[i].name).trim());
+
+                                console.log(cityData[(data[i].name).trim()]);
+                                if(cityData[(data[i].name).trim()] == undefined){
+                                    this.value = 0;
+                                }
+                                else{
+                                   this.value = cityData[(data[i].name).trim()] ; 
+                                }
+                                
+                            });
+                }
+
+                            // Hide loading and add series
+                            chart.hideLoading();
+                            clearTimeout(fail);
+                            chart.addSeriesAsDrilldown(e.point, {
+                                name: e.point.name,
+                                data: data,
+                                dataLabels: {
+                                    enabled: true,
+                                    format: '{point.name}'
+                                }
+                            });
+                        });
+                    }
+                    }
+                }
+                    },
+                 title: {
+      text: 'Events data in the US'
+    },
+
+    subtitle: {
+      text: null
+    },
+    legend: {
+            layout: 'vertical',
+            borderWidth: 0,
+            backgroundColor: 'rgba(255,255,255,0.85)',
+            floating: 'true',
+            align:'left'
+            
+        },
+    mapNavigation: {
+      enabled: true,
+      buttonOptions: {
+        verticalAlign: 'bottom'
+      }
+    },
+ 
+    colorAxis: {
+      min: 0
             },
-            {
-              name: 'Separators',
-              type: 'mapline',
-              data: Highcharts.geojson(Highcharts.maps['countries/us/us-all'], 'mapline'),
-              color: 'silver',
-              showInLegend: false,
-              enableMouseTracking: false
-            }]
-        });
+
+    series: [{
+      data: data,
+      mapData: Highcharts.maps['countries/us/us-all'],
+      joinBy: 'hc-key',
+      name: 'Event data',
+      states: {
+        hover: {
+          color: '#BADA55'
+        }
+      },
+      dataLabels: {
+        enabled: true,
+        format: '{point.name}'
+      },
+        point: {
+
+            },
+         tooltip: {
+                pointFormat: '{point.name}:<br> {point.event} :{point.value}'
+    }
+    },
+    {
+      name: 'Separators',
+      type: 'mapline',
+      data: Highcharts.geojson(Highcharts.maps['countries/us/us-all'], 'mapline'),
+      color: 'silver',
+      showInLegend: false,
+      enableMouseTracking: false
+    }],
+
+    drilldown: {
+            //series: drilldownSeries,
+            activeDataLabelStyle: {
+                color: '#FFFFFF',
+                textDecoration: 'none',
+                textShadow: '0 0 3px #000000'
+            },
+            drillUpButton: {
+                relativeTo: 'spacingBox',
+                position: {
+                    x: 0,
+                    y: 60
+                }
+            }
+        }
+                });
         }
     vm.displayLocationChart = function(locations, count){
         

@@ -369,62 +369,159 @@ angular.module('insightCtrl',[])
                 color: Highcharts.getOptions().colors[5]
             }]
         });
-    Highcharts.chart('container_user', {
+    Highcharts.chart( {
+
+      
+        chart: {
+            
+            renderTo: 'container_user',
+            type: 'column'
+        },
         title: {
-            text: 'User Interests'
+            text: 'Events Analysis'
+        },
+        subtitle: {
+            
         },
         xAxis: {
-            categories: ['AL', 'CA', 'AZ', 'WI', 'Co']
+            type: 'category'
         },
-        yAxis:{ text: 'Interest'},
-        labels: {
-            items: [{
-                html: 'User Interest Comparision %',
-                style: {
-                    left: '50px',
-                    top: '18px',
-                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'black'
+        yAxis: {
+            title: {
+                text: 'Total number of Events'
+            }
+
+        },
+        legend: {
+            enabled: false
+        },
+        plotOptions: {
+            series: {
+                borderWidth: 0,
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.y}'
                 }
+            }
+        },
+
+        tooltip: {
+            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b><br/>'
+        },
+
+        series: [{
+            name: 'Events',
+            colorByPoint: true,
+            data: [{
+                name: 'Positive',
+                y: 56
+            }, {
+                name: 'Neutral',
+                y: 24
+            }, {
+                name: 'Negative',
+                y: 10
             }]
+        }]
+      
+                });
+
+
+  
+
+
+}
+
+ // cluster 
+
+    var centroids = [ [11, 5.6],[-4,5]];
+      var cluster1 = [[12, 1.6], [13, 9.0], [10, 4.2], [5, 3.0], [4, 3.6],
+                [1, 5.0], [2, 7.6], [3, 6.8], [4, 6.8]];
+      var cluster2 = [[-1.0, 5.6], [-2, 1.8], [-3, 8.7], [-4, 2.6], [-7, 8.8],
+                [-10, 4.8], [-11, 6.4], [-12, 7.4], [-13, 2.0], [-4.0, 1.6]];
+  
+    Highcharts.chart( {
+
+      
+
+      chart: {
+            renderTo: 'container_cluster',
+            type: 'scatter',
+            zoomType: 'xy'
+        },
+        title: {
+            text: 'Clustering'
+        },
+        subtitle: {
+           
+        },
+        xAxis: {
+            title: {
+                enabled: false,
+                text: 'Height (cm)'
+            },
+            startOnTick: true,
+            endOnTick: true,
+            showLastLabel: true
+        },
+        yAxis: {
+            title: {
+                enabled: false,
+                text: 'Weight (kg)'
+            }
+        },
+        legend: {
+            enabled: false,
+            layout: 'vertical',
+            align: 'left',
+            verticalAlign: 'top',
+            x: 100,
+            y: 70,
+            floating: true,
+            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
+            borderWidth: 1
+        },
+        plotOptions: {
+            scatter: {
+                marker: {
+                    radius: 10,
+                    states: {
+                        hover: {
+                            enabled: true,
+                            lineColor: 'rgb(100,100,100)'
+                        }
+                    }
+                },
+                states: {
+                    hover: {
+                        marker: {
+                            enabled: false
+                        }
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<b>{series.name}</b><br>',
+                    pointFormat: '{point.x} cm, {point.y} kg'
+                }
+            }
         },
         series: [{
-            type: 'column',
-            name: 'Male',
-            data: [3, 2, 1, 3, 4],
-            color: Highcharts.getOptions().colors[0]
+            name: 'Positive',
+            color: 'rgba(223, 83, 83, .5)',
+            data: cluster1
+
         }, {
-            type: 'column',
-            name: 'Female',
-            data: [2, 3, 5, 7, 6],
-            color: Highcharts.getOptions().colors[5]
-        },  {
-            type: 'spline',
-            name: 'Average',
-            data: [3, 2.67, 3, 6.33, 3.33],
-            marker: {
-                lineWidth: 2,
-                lineColor: Highcharts.getOptions().colors[1],
-                fillColor: 'white'
-            }
-        }, {
-            type: 'pie',
-            name: 'Total consumption',
-            data: [{
-                name: 'Male',
-                y: 13,
-                color: Highcharts.getOptions().colors[0] // Jane's color
-            }, {
-                name: 'Female',
-                y: 23,
-                color: Highcharts.getOptions().colors[5] // John's color
-            }],
-            center: [100, 80],
-            size: 100,
-            showInLegend: false,
-            dataLabels: {
-                enabled: false
-            }
-        }]
-    });
-}
+            name: 'Negative',
+            color: 'rgba(119, 152, 191, .5)',
+            data: cluster2
+        },
+         {
+            name: 'centroid',
+            color: 'rgba(0,0,0,0.5)',
+            data: centroids
+        }
+        ]
+                });
+
 });
