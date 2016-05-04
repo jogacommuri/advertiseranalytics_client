@@ -53,6 +53,9 @@ angular.module('homeCtrl',['angularUtils.directives.dirPagination'])
     vm.centroids = [];
     vm.cluster1 = [];
     vm.cluster2 = [];
+
+    vm.categoryEventsMap = {};
+    vm.categoryEvents = [];
     vm.getRecomendations=function(){
         //vm.adData.category=vm.category;
         //vm.adData.state=vm.state;
@@ -71,6 +74,14 @@ angular.module('homeCtrl',['angularUtils.directives.dirPagination'])
                     sweetAlert("No events found ",'',"error");
                 }
                 else{
+
+                    // initialize categoryEventsMap
+
+                    for(var i=0; i<data.targetCategory.length; i++){
+                        vm.categoryEventsMap[data.targetCategory[i]] = 0;
+                    }
+
+
                     for(var i=0;i<data.events.length;i++){
                         if(data.events[i].image_url!=null){
                             data.events[i].image_url=data.events[i].image_url.replace(/\/small\//,'/medium/');
@@ -88,10 +99,17 @@ angular.module('homeCtrl',['angularUtils.directives.dirPagination'])
                         else{
                             vm.negativeEvents++;
                         }
+
+                        vm.categoryEventsMap[data.events[i].category_id]++;
                     }
                     vm.events=data.events; 
-
+                    console.log(vm.categoryEventsMap);
                     // for map
+                    for(var key in vm.categoryEventsMap){
+                        vm.categoryEvents.push({name: key, y:vm.categoryEventsMap[key]});
+                    }
+                    console.log(vm.categoryEvents);
+
 
                     for(var i=0; i<data.stateCount.length; i++){
 
@@ -117,6 +135,10 @@ angular.module('homeCtrl',['angularUtils.directives.dirPagination'])
                     //eventsAnalysis
 
                     vm.displayEventsChart();
+                    //
+
+                    vm.displayEventsCategoryChart();
+
                 } 
 
         }).error(function(error) {
@@ -627,5 +649,43 @@ angular.module('homeCtrl',['angularUtils.directives.dirPagination'])
         }]
       
                 });
+   }
+
+   // categoryEventsChart
+
+   vm.displayEventsCategoryChart = function(){
+     
+     Highcharts.chart('container_graph4', {
+
+            chart: {
+                
+                type: 'pie'
+            },
+            credits: {
+                    enabled: false
+            },
+            title: {
+                text: 'Events By Category'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage}</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: false
+                    },
+                    showInLegend: true
+                }
+            },
+            series: [{
+                name: 'Location',
+                colorByPoint: true,
+                data: vm.categoryEvents
+            }]
+    });
+
    }
 });
