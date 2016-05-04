@@ -73,7 +73,7 @@
                         </label>
                         <div class="col-md-7">
                         <input id="product_name" type="text" class="form-control text-center" placeholder=""  
-                      required="required" >
+                      required="required" ng-model = "home.name">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -81,9 +81,7 @@
                             <h4 style="margin-bottom: 18px;">Product Category</h4>  
                         </label>
                         <div class="col-md-7">
-                      <select id="categories" class="form-control" ng-model="home.category" required="required" >
-                            <option ng-repeat="trending in trendings"  ng-value='trending.category_id'>{{trending.category_name}}</option>
-                      </select>
+                      <input id="categories" type="text" class="form-control text-center" ng-model="home.category">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -91,9 +89,7 @@
                             <h4 style="margin-bottom: 18px;">Target Age group</h4>  
                         </label>
                         <div class="col-md-7">
-                        <select id="age" class="form-control" >
-                            <option ng-repeat="age in home.ages"  ng-value='age'>{{age}}</option>
-                      </select>
+                           <input id="age" type="text" class="form-control text-center" ng-model="home.age">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -101,9 +97,7 @@
                             <h4 style="margin-bottom: 18px;">State</h4>  
                         </label>
                         <div class="col-md-7">
-                            <select id="age" class="form-control" ng-model="home.state">
-                            <option ng-repeat="state in home.states"  ng-value='state'>{{state}}</option>
-                      </select>
+                            <input id="location" type="text" class="form-control text-center" ng-model="home.state">
                         </div>
                     </div>
                     <div class="row">
@@ -167,9 +161,9 @@
             <div class="col-md-3">
                 <br/><br/>
                 <ul class="nav nav-pills nav-stacked">
-                    <li class="active"><a data-toggle="pill" data-target="#graph1">Age &amp; Gender</a></li>
+                    <li class="active"><a data-toggle="pill" data-target="#graph1">Events Analysis</a></li>
                     <li><a data-toggle="pill" data-target="#graph2">Cross Device</a></li>
-                    <li><a data-toggle="pill" data-target="#graph3">Location</a></li>
+                    <li><a data-toggle="pill" data-target="#graph3">Cluster</a></li>
                 </ul>
             </div>
             <br/><br/>
@@ -179,7 +173,7 @@
             </div>
             <div class="tab-content container-fluid" style="width:100%">
                 <div id="graph1" class="col-md-8 tab-pane fade in active" >
-                  <h3>Age &amp; Gender</h3>
+                  <h3>Events Analysis</h3>
                   
                   <div id="container_graph1" >
                         
@@ -192,7 +186,7 @@
                  </div>
                 </div>
                 <div id="graph3" class="col-md-8 tab-pane fade">
-                  <h3>Location</h3>
+                  <h3>Cluster</h3>
                   
                   <div id="container_graph3" >
 
