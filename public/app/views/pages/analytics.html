@@ -64,7 +64,7 @@
             <a ng-href="#" ng-click="analy.nike() "><img ng-src="images/nike.png" width="300px" height="300px" /></a>
           </div>
              <div class="col-md-offset-1 col-md-5 " >
-            <a ng-href="#"><img ng-src="images/toyota.png" width="300px" height="300px" /></a>
+            <a ng-href="#" ng-click="analy.toyota()"><img ng-src="images/toyota.png" width="300px" height="300px" /></a>
           </div>
         </div>
         <br/><br/><br/><br/>
@@ -164,6 +164,22 @@
                     
                 </div>
         
+    </div>
+       <div style="background-image:url(images/bg1.jpg); " ng-show="analy.toyotaevents">
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1 " >
+          <div dir-paginate="event in analy.eventstoyota| itemsPerPage: 10" >
+
+              <span color="white"><h4 class="font" style="color:white;font-size:large">{{$index+1}}. {{event.title}}</h4></span>
+              <span color="white"> <h6 class="font" style="color:white;font-size:medium">Event {{event.onwhen|date}}</h6></span>
+              <span color="white"><a ng-href="{{event.link}}" target="_blank" ><h6 class="font" style="color:white;font-size:medium">URL: {{event.link}}</h6></span></a>
+             
+
+ 
+          </div>
+          </div>
+        </div>
+        <dir-pagination-controls class="col-md-10 col-md-offset-1 " boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="./app/js/dirPagination.tpl.html"></dir-pagination-controls>
     </div>
     </div>
     </div>
