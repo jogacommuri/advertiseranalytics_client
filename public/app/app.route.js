@@ -6,6 +6,11 @@ angular.module('appRoutes', ['ngRoute'])
 				controller: 'homeCtrl',
                 controllerAs: 'home'
 			})
+			.when('/analytics',{
+				templateUrl: 'app/views/pages/analytics.html',
+				controller: 'analyticsCtrl',
+                controllerAs: 'analy'
+			})
 			.when('/events',{
 				templateUrl: 'app/views/pages/event.html',
 				controller: 'eventsCtrl'
