@@ -21,6 +21,21 @@ angular.module('analyticsCtrl',['angularUtils.directives.dirPagination'])
 				console.log('Error: ' + data);
 			});
     }; 
+      vm.locations=[];
+    vm.eventCount=[];
+    vm.eventData=[];
+    vm.positiveEvents = 0;
+    vm.negativeEvents = 0;
+    vm.neutralEvents = 0;
+    vm.adData={};
+
+    vm.centroids = [];
+    vm.cluster1 = [];
+    vm.cluster2 = [];
+
+    vm.categoryEventsMap = {};
+    vm.categoryEvents = [];
+    
     vm.nike=function(){
         $http.post("http://advanalytics.herokuapp.com/get_nike")
             .success(function(data){
@@ -47,5 +62,6 @@ angular.module('analyticsCtrl',['angularUtils.directives.dirPagination'])
             .error(function(data) {
                 console.log('Error: ' + data);
             });
-    };              
+    }; 
+
 });
