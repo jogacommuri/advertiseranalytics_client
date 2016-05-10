@@ -25,6 +25,11 @@ angular.module('analyticsCtrl',['angularUtils.directives.dirPagination'])
         $http.post("http://advanalytics.herokuapp.com/get_nike")
             .success(function(data){
                 vm.eventsnike=data.events;
+                for(var i=0;i<vm.eventsnike.length;i++){
+                    if(vm.eventsnike[i].attendance<15000){
+                        vm.eventsnike[i].attendance=15000;
+                    }
+                }
                 vm.both=false; 
                 vm.nikeevents=true;  
             })
