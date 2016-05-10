@@ -114,9 +114,10 @@
                 <br/><br/>
                 <ul class="nav nav-pills nav-stacked">
                     <li class="active"><a data-toggle="pill" data-target="#graph1">Events Analysis</a></li>
-                    <li><a data-toggle="pill" data-target="#graph2">Cross Device</a></li>
+                    <li><a data-toggle="pill" data-target="#graph2">Locations</a></li>
                     <li><a data-toggle="pill" data-target="#graph3">Cluster</a></li>
                     <li><a data-toggle="pill" data-target="#graph4">Events By Category</a></li>
+                    <li><a data-toggle="pill" data-target="#graph5">Revenue &amp; Budget</a></li>
                 </ul>
             </div>
             <br/><br/>
@@ -133,7 +134,7 @@
                  </div>
                 </div>
                 <div id="graph2" class="col-md-8 tab-pane fade" >
-                  <h3>Cross Device</h3>
+                  <h3>Locations</h3>
                   
                   <div id="container_graph2" >
                  </div>
@@ -154,6 +155,111 @@
                 </div>
 
                 <div id="graph4" class="col-md-8 tab-pane fade" >
+                  <h3>Events By Type</h3>
+                  
+                  <div id="container_graph4" >
+                        
+                 </div>
+                </div>
+
+                <div id="graph5" class="col-md-8 tab-pane fade" >
+                  <h3>Revenue &amp; Budget</h3>
+                  
+                  <div id="container_graph5" >
+                        
+                 </div>
+                 <br><br>
+                 <div id="container_graph6" >
+                        
+                 </div>
+
+                 <br><br>
+                 <div id="container_graph7" >
+                        
+                 </div>
+                </div>
+          </div>
+                    
+        </div>
+        
+    </div>
+  </div>
+  <!-- toyota -->
+  <div ng-show="analy.toyotaevents">
+      <div class="container-fluid">
+              
+              <ul class="nav nav-pills">
+                  <li class="active"><a data-toggle="pill" data-target="#events1">Events</a></li>
+                  <li><a data-toggle="pill" data-target="#geo1">Geographics</a></li> 
+                  <li><a data-toggle="pill" data-target="#demo1">Demographics</a></li>         
+              </ul>
+
+
+      </div>
+      <div class="tab-content container-fluid">
+        <div class="tab-pane fade in active" id="events1"  style="background-image:url(images/bg1.jpg); ">
+          <div class="row">
+            <div class="col-md-10 col-md-offset-1 " >
+              <div dir-paginate="event in analy.eventstoyota| itemsPerPage: 10" >
+
+              <span color="white"><h4 class="font" style="color:white;font-size:large">{{$index+1}}. {{event.title}}</h4></span>
+              <span color="white"> <h6 class="font" style="color:white;font-size:medium">Event {{event.onwhen|date}}</h6></span>
+              <span color="white"><a ng-href="{{event.link}}" target="_blank" ><h6 class="font" style="color:white;font-size:medium">URL: {{event.link}}</h6></span></a>
+             
+
+ 
+               </div>
+              </div>
+            </div>
+            <dir-pagination-controls class="col-md-10 col-md-offset-1 " boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="./app/js/dirPagination.tpl.html"></dir-pagination-controls>
+          </div>
+          <div id="geo1" class="tab-pane fade" >
+                  <h3>Geographics</h3>
+                  
+                  <div id="container_geo" >
+                 </div>
+          </div>
+       
+        <div id="demo1" class="tab-pane fade">
+                  <h3>Demographics</h3>
+                
+                    <div class="clear" style="height:10px;"></div>
+            <div class="col-md-3">
+                <br/><br/>
+                <ul class="nav nav-pills nav-stacked">
+                    <li class="active"><a data-toggle="pill" data-target="#graph1_1">Events Analysis</a></li>
+                    <li><a data-toggle="pill" data-target="#graph2_1">Cross Device</a></li>
+                    <li><a data-toggle="pill" data-target="#graph3_1">Cluster</a></li>
+                    <li><a data-toggle="pill" data-target="#graph4_1">Events By Category</a></li>
+                </ul>
+            </div>
+            <br/><br/>
+            <div class="loading" ng-show="event.loading">
+                <i class="icon-spinner icon-spin icon-large"></i>
+                    Loading data...
+            </div>
+            <div class="tab-content container-fluid" style="width:100%">
+                <div id="graph1_1" class="col-md-8 tab-pane fade in active" >
+                  <h3>Events Analysis</h3>
+                  
+                  <div id="container_graph1" >
+                        
+                 </div>
+                </div>
+                <div id="graph2_1" class="col-md-8 tab-pane fade" >
+                  <h3>Locations</h3>
+                  
+                  <div id="container_graph2" >
+                 </div>
+                </div>
+                <div id="graph3_1" class="col-md-8 tab-pane fade">
+                  <h3>Cluster</h3>
+                  
+                  <div id="container_graph3" >
+
+                 </div>
+                </div>
+                <div id="graph4_1" class="col-md-8 tab-pane fade" >
                   <h3>Events By Category</h3>
                   
                   <div id="container_graph4" >
@@ -162,25 +268,11 @@
                 </div>
           </div>
                     
-                </div>
+        </div>
         
     </div>
-       <div style="background-image:url(images/bg1.jpg); " ng-show="analy.toyotaevents">
-      <div class="row">
-        <div class="col-md-10 col-md-offset-1 " >
-          <div dir-paginate="event in analy.eventstoyota| itemsPerPage: 10" >
+  </div>
 
-              <span color="white"><h4 class="font" style="color:white;font-size:large">{{$index+1}}. {{event.title}}</h4></span>
-              <span color="white"> <h6 class="font" style="color:white;font-size:medium">Event {{event.onwhen|date}}</h6></span>
-              <span color="white"><a ng-href="{{event.link}}" target="_blank" ><h6 class="font" style="color:white;font-size:medium">URL: {{event.link}}</h6></span></a>
-             
-
- 
-          </div>
-          </div>
-        </div>
-        <dir-pagination-controls class="col-md-10 col-md-offset-1 " boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="./app/js/dirPagination.tpl.html"></dir-pagination-controls>
-    </div>
-    </div>
-    </div>
+</div>
+</div>
         
