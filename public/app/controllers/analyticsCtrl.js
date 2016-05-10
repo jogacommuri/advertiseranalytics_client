@@ -7,6 +7,7 @@ angular.module('analyticsCtrl',['angularUtils.directives.dirPagination'])
     vm.both=true;
     vm.eventsnike=null;
     vm.nikeevents=false;
+    vm.toyotaevents=false;
     vm.getCategories=function(){
        vm.token.token =$window.localStorage.getItem('accessToken');
         console.log(vm.token.token);
@@ -31,6 +32,7 @@ angular.module('analyticsCtrl',['angularUtils.directives.dirPagination'])
                     }
                 }
                 vm.both=false; 
+                vm.toyotaevents=false;
                 vm.nikeevents=true;  
             })
             .error(function(data) {
@@ -41,8 +43,10 @@ angular.module('analyticsCtrl',['angularUtils.directives.dirPagination'])
     vm.toyota=function(){
         $http.post("http://advanalytics.herokuapp.com/get_toyota")
             .success(function(data){
-                vm.both=false;
-                alert('success');
+                vm.eventstoyota=data.events;
+                vm.both=false; 
+                vm.toyotaevents=true;
+                vm.nikeevents=false; 
             })
             .error(function(data) {
                 console.log('Error: ' + data);
