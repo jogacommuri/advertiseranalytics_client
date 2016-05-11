@@ -8,6 +8,9 @@ angular.module('analyticsCtrl',['angularUtils.directives.dirPagination'])
     vm.eventsnike=null;
     vm.nikeevents=false;
     vm.toyotaevents=false;
+
+    vm.states = ["","Alabama","Alaska","Arizona","Arkansas", 
+"California","Colorado","Connecticut" ,"Delaware" ,"Florida","Georgia","Hawaii" ,"Idaho" ,"Illinois" ,"Indiana","Iowa" ,"Kansas" ,"Kentucky" ,"Louisiana" ,"Maine" ,"Maryland" ,"Massachusetts" ,"Michigan" ,"Minnesota" ,"Mississippi" ,"Missouri" ,"Montana" ,"Nebraska","Nevada" ,"New Hampshire","New Jersey" ,"New Mexico" ,"New York" ,"North Carolina" ,"North Dakota" ,"Ohio" ,"Oklahoma" ,"Oregon" ,"Pennsylvania" ,"Rhode Island ","South Carolina ","South Dakota" ,"Tennessee ","Texas","Utah ","Vermont" ,"Virginia" ,"Washington" ,"West Virginia" ,"Wisconsin" ,'Wyoming'];
     vm.getCategories=function(){
        vm.token.token =$window.localStorage.getItem('accessToken');
         console.log(vm.token.token);
@@ -36,22 +39,35 @@ angular.module('analyticsCtrl',['angularUtils.directives.dirPagination'])
     vm.cluster2 = [];
 
     vm.categoryEventsMap = {};
+    vm.eventsObjInState = {};
     vm.eventsStateMap = {};
+    vm.eventsAge = {};
     vm.categoryEvents = [];
 
     vm.budget = [6.19,4.70,3.60,3.83,4.44,3.79,4.20,3.83,2.79,1.64,1.69,1.71,1.44];
     vm.revenue = [];
     vm.budgetYears = [2015,2014,2013,2012,2011,2010,2009,2008,2007,2006,2005,2004,2003];
     vm.revenueYears = [];
+
+    vm.geo_map = {};
     
     vm.nike=function(){
         $http.post("http://advanalytics.herokuapp.com/get_nike")
             .success(function(data){
                 console.log(data);
                 vm.eventsnike=data.events;
+                var temp = 226;
                 for(var i=0;i<vm.eventsnike.length;i++){
+                    if(i > 0 && i < 70) {
+                        vm.eventsnike[i].ageGroup = "15-35";
+                    }else if(i >=70 && i < 110) {
+                        vm.eventsnike[i].ageGroup = "36-55";
+                    }else{
+                       vm.eventsnike[i].ageGroup = "55+"; 
+                    }
                     if(vm.eventsnike[i].attendance<15000){
-                        vm.eventsnike[i].attendance=15000;
+                        temp += 116;
+                        vm.eventsnike[i].attendance= 15000 + temp;
                     }
                 }
                 vm.both=false; 
@@ -85,6 +101,7 @@ angular.module('analyticsCtrl',['angularUtils.directives.dirPagination'])
                         
                         if(vm.categoryEventsMap.hasOwnProperty(data.events[i].type)){
                             vm.categoryEventsMap[data.events[i].type]++;
+
                         }
                         else{
                             vm.categoryEventsMap[data.events[i].type] = 1;
@@ -99,11 +116,83 @@ angular.module('analyticsCtrl',['angularUtils.directives.dirPagination'])
                        }
                        else{
                            vm.eventsStateMap[data.events[i].state] = 1;
+
+                       }
+
+                       if(vm.eventsObjInState.hasOwnProperty(data.events[i].state)){
+
+                          vm.eventsObjInState[data.events[i].state].push(data.events[i]);
+                       }
+                       else {
+                          vm.eventsObjInState[data.events[i].state] = [data.events[i]];
+                       }
+                      
+                      if(vm.eventsAge.hasOwnProperty(data.events[i].ageGroup)){
+
+                          vm.eventsAge[data.events[i].ageGroup].push(data.events[i]);
+                       }
+                       else {
+                          vm.eventsAge[data.events[i].ageGroup] = [data.events[i]];
                        }
 
 
+                       //for geographics map
+
+                       if(vm.geo_map.hasOwnProperty((data.events[i].state_abbr).toLowerCase())){
+                           vm.geo_map[(data.events[i].state_abbr).toLowerCase()]++;
+                       }
+                       else{
+                           vm.geo_map[(data.events[i].state_abbr).toLowerCase()] = 1;
+
+                       }
                        
+
+
                     }
+                    for(var key in vm.geo_map){
+                         //console.log(key+":"+ vm.geo_map[key]);
+                         vm.eventData.push({'hc-key': key,'value': vm.geo_map[key],'drilldown': key});
+                       }
+
+
+                    console.log(vm.eventsObjInState);
+                    console.log(vm.state);
+                    console.log(vm.eventsAge);
+                    console.log(vm.geo_map);
+                    console.log(vm.eventData);
+                    vm.eventsAgeState = {};
+                    if(vm.state && vm.age){
+                      for(var key in vm.eventsObjInState){
+                        for(var i = 0 ; i< vm.eventsObjInState[key].length; i++ ) {
+                            if(vm.eventsAgeState.hasOwnProperty(key)) {
+                                if(vm.eventsAgeState[key].hasOwnProperty(vm.eventsObjInState[key][i]["ageGroup"])) {
+                                    vm.eventsAgeState[key][vm.eventsObjInState[key][i]["ageGroup"]].push(vm.eventsObjInState[key][i]);
+                                }else{
+
+                                    vm.eventsAgeState[key][vm.eventsObjInState[key][i]["ageGroup"]] = [vm.eventsObjInState[key][i]];
+                                }
+                            }else{
+                                vm.eventsAgeState[key] = {};
+                                 vm.eventsAgeState[key][vm.eventsObjInState[key][i]["ageGroup"]] = [vm.eventsObjInState[key][i]];
+                            }
+                        }
+                      }
+                      console.log(vm.eventsAgeState);
+                      vm.eventsnike = vm.eventsAgeState[vm.state][vm.age];
+                    }
+                    else if(vm.state){
+                     vm.eventsnike = vm.eventsObjInState[vm.state];
+                    }
+                    else if(vm.age){
+                     console.log(vm.age);
+                     vm.eventsnike = vm.eventsAge[vm.age];
+                    }
+                    else{
+                    vm.eventsnike = data.events;
+                    }
+
+                    console.log(vm.eventsnike.length);
+                    //vm.eventsnike = vm.eventsObjInState[vm.state];
                     //console.log(vm.categoryEventsMap);
                     //console.log(vm.eventsStateMap);
                     // for map
@@ -120,6 +209,9 @@ angular.module('analyticsCtrl',['angularUtils.directives.dirPagination'])
                     //console.log(vm.count);
                     
                     vm.displayLocationChart();
+
+                    //geo_map
+                    vm.displayMap();
                 }
 
                 // for cluster
@@ -676,4 +768,160 @@ Highcharts.chart({
         }]
     });
 
+// map
+
+vm.displayMap = function(){
+            Highcharts.Map( {
+
+      chart: {
+                        renderTo: 'container_geo',
+                        type: 'map',
+                        
+
+                        events: {
+                        
+                        drilldown: function (e){
+                        alert("inside drilldown");
+                        if (!e.seriesOptions) {
+                           var chart = this,
+                            mapKey = 'countries/us/'+e.point.drilldown+'-all',
+                            // Handle error, the timeout is cleared on success
+                            fail = setTimeout(function () {
+                                if (!Highcharts.maps[mapKey]) {
+                                    chart.showLoading('<i class="icon-frown"></i> Failed loading ' + e.point.name);
+
+                                    fail = setTimeout(function () {
+                                        chart.hideLoading();
+                                    }, 1000);
+                                }
+                            }, 3000);
+                          alert(mapKey);
+                        // Show the spinner
+                        chart.showLoading('<i class="icon-spinner icon-spin icon-3x"></i>'); // Font Awesome spinner
+
+                        // Load the drilldown map
+                        $.getScript('https://code.highcharts.com/mapdata/' + mapKey + '.js', function () {
+
+                            data = Highcharts.geojson(Highcharts.maps[mapKey]);
+
+                            // Set a non-random bogus value
+                            //console.log(data.length);
+                            vm.cityData = {};
+                            $http.post('http://advanalytics.herokuapp.com/getEventsInCity', {state: e.point.name, category_id: vm.adData.category})
+            .success(function(data1){
+                console.log(data1.data);
+               vm.cityData = data1.data;
+
+               vm.city(vm.cityData);
+               
+            })
+            .error(function(data) {
+                    console.log('Error: ' + data);
+
+                });
+
+                    vm.city = function(cityData){ 
+                        $.each(data, function (i) {
+                                console.log((data[i].name).trim());
+
+                                console.log(cityData[(data[i].name).trim()]);
+                                if(cityData[(data[i].name).trim()] == undefined){
+                                    this.value = 0;
+                                }
+                                else{
+                                   this.value = cityData[(data[i].name).trim()] ; 
+                                }
+                                
+                            });
+                }
+
+                            // Hide loading and add series
+                            chart.hideLoading();
+                            clearTimeout(fail);
+                            chart.addSeriesAsDrilldown(e.point, {
+                                name: e.point.name,
+                                data: data,
+                                dataLabels: {
+                                    enabled: true,
+                                    format: '{point.name}'
+                                }
+                            });
+                        });
+                    }
+                    }
+                }
+                    },
+                 title: {
+      text: 'Events data in the US'
+    },
+
+    subtitle: {
+      text: null
+    },
+    legend: {
+            layout: 'vertical',
+            borderWidth: 0,
+            backgroundColor: 'rgba(255,255,255,0.85)',
+            floating: 'true',
+            align:'left'
+            
+        },
+    mapNavigation: {
+      enabled: true,
+      buttonOptions: {
+        verticalAlign: 'bottom'
+      }
+    },
+ 
+    colorAxis: {
+      min: 0
+            },
+
+    series: [{
+      data: vm.eventData,
+      mapData: Highcharts.maps['countries/us/us-all'],
+      joinBy: 'hc-key',
+      name: 'Event data',
+      states: {
+        hover: {
+          color: '#BADA55'
+        }
+      },
+      dataLabels: {
+        enabled: true,
+        format: '{point.name}'
+      },
+        point: {
+
+            },
+         tooltip: {
+                pointFormat: '{point.name}:<br> {point.event} :{point.value}'
+    }
+    },
+    {
+      name: 'Separators',
+      type: 'mapline',
+      data: Highcharts.geojson(Highcharts.maps['countries/us/us-all'], 'mapline'),
+      color: 'silver',
+      showInLegend: false,
+      enableMouseTracking: false
+    }],
+
+    drilldown: {
+            //series: drilldownSeries,
+            activeDataLabelStyle: {
+                color: '#FFFFFF',
+                textDecoration: 'none',
+                textShadow: '0 0 3px #000000'
+            },
+            drillUpButton: {
+                relativeTo: 'spacingBox',
+                position: {
+                    x: 0,
+                    y: 60
+                }
+            }
+        }
+                });
+        }
 });
