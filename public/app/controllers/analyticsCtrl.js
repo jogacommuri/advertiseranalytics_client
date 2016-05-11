@@ -50,6 +50,10 @@ angular.module('analyticsCtrl',['angularUtils.directives.dirPagination'])
     vm.revenueYears = [];
 
     vm.geo_map = {};
+
+    vm.reload = function(){
+        $window.location.reload();
+    }
     
     vm.nike=function(){
         $http.post("http://advanalytics.herokuapp.com/get_nike")
@@ -67,7 +71,7 @@ angular.module('analyticsCtrl',['angularUtils.directives.dirPagination'])
                     }
                     if(vm.eventsnike[i].attendance<15000){
                         temp += 116;
-                        vm.eventsnike[i].attendance= 15000 + temp;
+                        vm.eventsnike[i].attendance= 35000 + temp;
                     }
                 }
                 vm.both=false; 
@@ -245,6 +249,34 @@ angular.module('analyticsCtrl',['angularUtils.directives.dirPagination'])
             });
 
     };
+
+    vm.locations1=[];
+    vm.count1 = [];
+    vm.eventCount1=[];
+    vm.eventData1=[];
+    vm.positiveEvents1 = 0;
+    vm.negativeEvents1 = 0;
+    vm.neutralEvents1 = 0;
+    vm.adData1={};
+
+    vm.centroids1 = [];
+    vm.cluster1_1 = [];
+    vm.cluster2_1 = [];
+
+    vm.categoryEventsMap1 = {};
+    vm.eventsObjInState1 = {};
+    vm.eventsStateMap1 = {};
+    vm.eventsAge1 = {};
+    vm.categoryEvents1 = [];
+
+    vm.budget1 = [35.68,29.66,33.65,27.86,15.6,22.07,11.50,25.90,27.64,22.27,21.05,17.71,31.44];
+    vm.revenue1 = [];
+    vm.budgetYears1 = [2015,2014,2013,2012,2011,2010,2009,2008,2007,2006,2005,2004,2003];
+    vm.revenueYears1 = [];
+
+    vm.geo_map1 = {};
+
+
     vm.toyota=function(){
         $http.post("http://advanalytics.herokuapp.com/get_toyota")
             .success(function(data){
@@ -252,6 +284,91 @@ angular.module('analyticsCtrl',['angularUtils.directives.dirPagination'])
                 vm.both=false; 
                 vm.toyotaevents=true;
                 vm.nikeevents=false; 
+                
+                if(data.events.length === 0){
+                    sweetAlert("No events found ",'',"error");
+                }
+                else{
+                    console.log(data);
+                    for(var i=0;i<data.events.length;i++){
+                       
+                        if(data.events[i].score > 0){
+                            vm.positiveEvents1++;
+                        }
+                        else if(data.events[i].score == 0){
+                            vm.neutralEvents1++;
+                        }
+                        else{
+                            vm.negativeEvents1++;
+                        }
+                        
+                        
+                       //vm.categoryEventsMap[data.events[i].category_id]++;
+
+
+                       //events-state map
+
+                       /*if(vm.eventsStateMap.hasOwnProperty(data.events[i].state)){
+                           vm.eventsStateMap[data.events[i].state]++;
+                       }
+                       else{
+                           vm.eventsStateMap[data.events[i].state] = 1;
+
+                       }
+
+                       if(vm.eventsObjInState.hasOwnProperty(data.events[i].state)){
+
+                          vm.eventsObjInState[data.events[i].state].push(data.events[i]);
+                       }
+                       else {
+                          vm.eventsObjInState[data.events[i].state] = [data.events[i]];
+                       }
+                      
+                      if(vm.eventsAge.hasOwnProperty(data.events[i].ageGroup)){
+
+                          vm.eventsAge[data.events[i].ageGroup].push(data.events[i]);
+                       }
+                       else {
+                          vm.eventsAge[data.events[i].ageGroup] = [data.events[i]];
+                       }
+
+
+                       //for geographics map
+
+                       if(vm.geo_map.hasOwnProperty((data.events[i].state_abbr).toLowerCase())){
+                           vm.geo_map[(data.events[i].state_abbr).toLowerCase()]++;
+                       }
+                       else{
+                           vm.geo_map[(data.events[i].state_abbr).toLowerCase()] = 1;
+
+                       }
+                       
+
+                      */
+                    }
+
+                    // for cluster
+ 
+                    for(var i=0; i < data.clusterResponse.length; i++){
+                        vm.centroids1.push(data.clusterResponse[i].centroid);
+                         if(i == 0){
+                            vm.cluster1_1.push(data.clusterResponse[i].cluster);
+                         }
+                         if(i == 1){
+                            vm.cluster2_1.push(data.clusterResponse[i].cluster);
+                         }
+                    }
+
+                    vm.displayClusterChart1(); 
+
+                    vm.displayEventsChart1();
+
+                    vm.displayBudgetGraph1();
+
+                }
+
+
+
             })
             .error(function(data) {
                 console.log('Error: ' + data);
@@ -924,4 +1041,245 @@ vm.displayMap = function(){
         }
                 });
         }
+
+
+
+
+
+        // for toyota
+
+        // EventsChart
+
+   vm.displayEventsChart1 = function(){
+
+    Highcharts.chart( {
+
+      
+        chart: {
+            
+            renderTo: 'container1_graph1',
+            type: 'column'
+        },
+        title: {
+            text: 'Events Analysis'
+        },
+        subtitle: {
+            
+        },
+        xAxis: {
+            type: 'category'
+        },
+        yAxis: {
+            title: {
+                text: 'Total number of Events'
+            }
+
+        },
+        legend: {
+            enabled: false
+        },
+        plotOptions: {
+            series: {
+                borderWidth: 0,
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.y}'
+                }
+            }
+        },
+
+        tooltip: {
+            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b><br/>'
+        },
+
+        series: [{
+            name: 'Events',
+            colorByPoint: true,
+            data: [{
+                name: 'Positive',
+                y: vm.positiveEvents1
+            }, {
+                name: 'Neutral',
+                y: vm.neutralEvents1
+            }, {
+                name: 'Negative',
+                y: vm.negativeEvents1
+            }]
+        }]
+      
+        });
+   }
+
+   // cluster 
+
+   vm.displayClusterChart1 = function(){
+
+      Highcharts.chart( {
+
+      
+
+      chart: {
+            renderTo: 'container1_graph3',
+            type: 'scatter',
+            zoomType: 'xy'
+        },
+        title: {
+            text: 'Clustering'
+        },
+        subtitle: {
+           
+        },
+        xAxis: {
+            title: {
+                enabled: false,
+                text: 'Height (cm)'
+            },
+            startOnTick: true,
+            endOnTick: true,
+            showLastLabel: true
+        },
+        yAxis: {
+            title: {
+                enabled: false,
+                text: 'Weight (kg)'
+            }
+        },
+        legend: {
+            enabled: false,
+            layout: 'vertical',
+            align: 'left',
+            verticalAlign: 'top',
+            x: 100,
+            y: 70,
+            floating: true,
+            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
+            borderWidth: 1
+        },
+        plotOptions: {
+            scatter: {
+                marker: {
+                    radius: 5,
+                    states: {
+                        hover: {
+                            enabled: true,
+                            lineColor: 'rgb(100,100,100)'
+                        }
+                    }
+                },
+                states: {
+                    hover: {
+                        marker: {
+                            enabled: false
+                        }
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<b>{series.name}</b><br>',
+                    pointFormat: '{point.x} , {point.y}'
+                }
+            }
+        },
+        series: [{
+            name: 'Positive',
+            color: 'rgba(223, 83, 83, .5)',
+            data: vm.cluster1_1[0]
+
+        }, {
+            name: 'Negative',
+            color: 'rgba(119, 152, 191, .5)',
+            data: vm.cluster2_1[0]
+        },
+         {
+            name: 'centroid',
+            color: 'rgba(0,0,0,0.5)',
+            data: vm.centroids1
+        }
+        ]
+                });
+   }
+
+   //budget
+
+   vm.displayBudgetGraph1 = function(){
+        
+        
+      Highcharts.chart({
+        chart: {
+            renderTo: 'container1_graph5',
+            type: 'column',
+            options3d: {
+                enabled: false,
+                alpha: 10,
+                beta: 25,
+                depth: 70
+            }
+        },
+        title: {
+            text: 'Budget Spent on Advertisements & Endorsements'
+        },
+       
+        plotOptions: {
+            column: {
+                depth: 50
+            }
+        },
+        xAxis: {
+            categories: vm.budgetYears
+        },
+        yAxis: {
+            title: {
+                text: 'In Billion Dollars'
+            }
+        },
+        series: [{
+            name: 'Budget',
+            data: vm.budget1
+        }]
+    });
+        
+    } 
+
+    // device budget spent
+
+     Highcharts.chart({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie',
+            renderTo: 'container1_graph7'
+        },
+        title: {
+            text: 'Toyota - Spending in millions (US Dolalrs)'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
+                }
+            }
+        },
+        series: [{
+            name: 'Ads & Endorsements',
+            data: [
+                { name: 'Tv', y: 958.7},
+                { name: 'Internet', y: 111.9 },
+                { name: 'Magazines', y:152 },
+                { name: 'Radio', y:21.1 },
+                { name: 'Outdoor', y: 18.77 },
+                { name: 'Newspapers', y: 12.91 },
+                { name: 'Unmeasured', y: 815.2 }
+            ]
+        }]
+    });
 });

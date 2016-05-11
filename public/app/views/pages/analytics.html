@@ -33,7 +33,7 @@
               <p>Admin</p>
             </li>
               <li><a href="/home"><span class="sclicons" style="font-size:20px;color:whitesmoke"><i class="fa fa-home"></i></span> Home</a> </li>
-               <li><a href="/analytics"><span class="sclicons" style="font-size:20px;color:whitesmoke"><i class="fa fa-line-chart"></i></span> Analytics</a> </li>
+               <li><a ng-click = "analy.reload()"><span class="sclicons" style="font-size:20px;color:whitesmoke"><i class="fa fa-line-chart"></i></span> Analytics</a> </li>
               <li>
                     <a data-toggle="dropdown"><span class="sclicons" style="font-size:20px;color:whitesmoke"> <i class="fa fa-tachometer"></i></span> Events </a>
                     <ul class="dropdown-menu">
@@ -91,7 +91,13 @@
                             <h4 style="margin-bottom: 18px;">Target Age group</h4>  
                         </label>
                         <div class="col-md-7">
-                           <input id="age" type="text" class="form-control text-center" ng-model="analy.age">
+                           <select id= "age" class="form-control text-center" ng-model="analy.age">
+                             
+                             <option value="15-35">15-35</option>
+                             <option value="36-55">36-55</option>
+                             <option value="55+">55+</option>
+                           </select>
+                           
                         </div>
                     </div>
                     
@@ -119,8 +125,9 @@
              <div class="col-md-offset-1 col-md-5 " >
             <a ng-href="#" ng-click="analy.toyota()"><img ng-src="images/toyota.png" width="300px" height="300px" /></a>
           </div>
+          <br/><br/><br/><br/>
         </div>
-         <br/><br/><br/><br/>
+         
     </div>
     <div ng-show="analy.nikeevents">
       <div class="container-fluid">
@@ -244,7 +251,7 @@
               
               <ul class="nav nav-pills">
                   <li class="active"><a data-toggle="pill" data-target="#events1">Events</a></li>
-                  <li><a data-toggle="pill" data-target="#geo1">Geographics</a></li> 
+                  <!-- <li><a data-toggle="pill" data-target="#geo1">Geographics</a></li> --> 
                   <li><a data-toggle="pill" data-target="#demo1">Demographics</a></li>         
               </ul>
 
@@ -282,9 +289,10 @@
                 <br/><br/>
                 <ul class="nav nav-pills nav-stacked">
                     <li class="active"><a data-toggle="pill" data-target="#graph1_1">Events Analysis</a></li>
-                    <li><a data-toggle="pill" data-target="#graph2_1">Cross Device</a></li>
+                    <!-- <li><a data-toggle="pill" data-target="#graph2_1">Locations</a></li> -->
                     <li><a data-toggle="pill" data-target="#graph3_1">Cluster</a></li>
-                    <li><a data-toggle="pill" data-target="#graph4_1">Events By Category</a></li>
+                    <!-- <li><a data-toggle="pill" data-target="#graph4_1">Events By Category</a></li> -->
+                    <li><a data-toggle="pill" data-target="#graph5_1">Revenue &amp; Budget</a></li>
                 </ul>
             </div>
             <br/><br/>
@@ -296,27 +304,52 @@
                 <div id="graph1_1" class="col-md-8 tab-pane fade in active" >
                   <h3>Events Analysis</h3>
                   
-                  <div id="container_graph1" >
+                  <div id="container1_graph1" >
                         
                  </div>
                 </div>
-                <div id="graph2_1" class="col-md-8 tab-pane fade" >
+                <!-- <div id="graph2_1" class="col-md-8 tab-pane fade" >
                   <h3>Locations</h3>
                   
-                  <div id="container_graph2" >
+                  <div id="container1_graph2" >
                  </div>
-                </div>
+                </div> -->
                 <div id="graph3_1" class="col-md-8 tab-pane fade">
                   <h3>Cluster</h3>
                   
-                  <div id="container_graph3" >
+                  <div id="container1_graph3" >
 
                  </div>
                 </div>
-                <div id="graph4_1" class="col-md-8 tab-pane fade" >
-                  <h3>Events By Category</h3>
+                <div id="budget" class="col-md-8 tab-pane fade">
+                  <h3>Budget</h3>
                   
-                  <div id="container_graph4" >
+                  <div id="container1_budget" >
+
+                 </div>
+                </div>
+
+                <!-- <div id="graph4_1" class="col-md-8 tab-pane fade" >
+                  <h3>Events By Type</h3>
+                  
+                  <div id="container1_graph4" >
+                        
+                 </div>
+                </div> -->
+
+                <div id="graph5_1" class="col-md-8 tab-pane fade" >
+                  <h3>Revenue &amp; Budget</h3>
+                  
+                  <div id="container1_graph5" >
+                        
+                 </div>
+                 <br><br>
+                 <div id="container1_graph6" >
+                        
+                 </div>
+
+                 <br><br>
+                 <div id="container1_graph7" >
                         
                  </div>
                 </div>
